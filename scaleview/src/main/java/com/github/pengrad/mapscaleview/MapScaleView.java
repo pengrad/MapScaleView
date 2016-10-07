@@ -13,27 +13,60 @@ import com.google.android.gms.maps.model.CameraPosition;
 
 public class MapScaleView extends View {
 
+    private final Paint paint;
+    private final float density;
     private final MapScaleModel mapScaleModel;
 
-    private final Paint paint;
-
-    private final int lineWidth = 3;
+    private Scale scale;
 
     public MapScaleView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(3);
-        paint.setTextSize(25);
-
         mapScaleModel = new MapScaleModel();
+
+        density = context.getResources().getDisplayMetrics().density;
+
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setTextSize(12 * density);
+        paint.setStrokeWidth(1.5f * density);
+        paint.setColor(Color.parseColor("#333333"));
     }
 
     public void update(Projection projection, CameraPosition cameraPosition) {
-        mapScaleModel.setProjection(projection, cameraPosition);
+        scale = mapScaleModel.setProjection(projection, cameraPosition);
         invalidate();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = measureDimension(desiredWidth(), widthMeasureSpec);
+        int height = measureDimension(desiredHeight(), heightMeasureSpec);
+
+        mapScaleModel.setMaxWidth(width);
+
+        setMeasuredDimension(width, height);
+    }
+
+    private int desiredWidth() {
+        return (int) (100 * density);
+    }
+
+    private int desiredHeight() {
+        return (int) (paint.getTextSize() * 1.5 + paint.getStrokeWidth());
+    }
+
+    private int measureDimension(int desiredSize, int measureSpec) {
+        int mode = View.MeasureSpec.getMode(measureSpec);
+        int size = View.MeasureSpec.getSize(measureSpec);
+
+        if (mode == View.MeasureSpec.EXACTLY) {
+            return size;
+        } else if (mode == View.MeasureSpec.AT_MOST) {
+            return Math.min(desiredSize, size);
+        } else {
+            return desiredSize;
+        }
     }
 
     @Override
@@ -46,17 +79,21 @@ public class MapScaleView extends View {
     }
 
     private void drawView(Canvas canvas, Paint paint) {
-        if (!mapScaleModel.isValid()) return;
+        if (scale == null) return;
 
-        float lineLength = mapScaleModel.getPixelLength();
-        String text = mapScaleModel.getText();
+        final float lineLength = scale.length();
+        final String text = scale.text();
 
         Rect textRect = new Rect();
         paint.getTextBounds(text, 0, text.length(), textRect);
 
         canvas.drawText(text, 0, textRect.height(), paint);
 
-        canvas.drawLine(0, textRect.height(), lineLength, textRect.height(), paint);
-        canvas.drawLine(lineLength - lineWidth / 2, textRect.height(), lineLength - lineWidth / 2, textRect.height() / 2, paint);
+        int textHeight = textRect.height();
+        float horizontalLineY = textHeight + textHeight / 2;
+        float verticalLineX = lineLength - paint.getStrokeWidth() / 2;
+
+        canvas.drawLine(0, horizontalLineY, lineLength, horizontalLineY, paint);
+        canvas.drawLine(verticalLineX, horizontalLineY, verticalLineX, textHeight, paint);
     }
 }
