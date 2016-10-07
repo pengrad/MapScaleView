@@ -2,7 +2,6 @@ package com.github.pengrad.mapscaleview;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -14,23 +13,31 @@ import com.google.android.gms.maps.model.CameraPosition;
 public class MapScaleView extends View {
 
     private final Paint paint;
-    private final float density;
+    private final ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
     private Scale scale;
 
+    public MapScaleView(Context context) {
+        this(context, null);
+    }
+
     public MapScaleView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public MapScaleView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
 
         mapScaleModel = new MapScaleModel();
 
-        density = context.getResources().getDisplayMetrics().density;
+        viewConfig = new ViewConfig(context, attrs);
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setTextSize(12 * density);
-        paint.setStrokeWidth(1.5f * density);
-        paint.setColor(Color.parseColor("#333333"));
+        paint.setTextSize(viewConfig.textSize);
+        paint.setStrokeWidth(viewConfig.strokeWidth);
+        paint.setColor(viewConfig.color);
     }
 
     public void update(Projection projection, CameraPosition cameraPosition) {
@@ -49,7 +56,7 @@ public class MapScaleView extends View {
     }
 
     private int desiredWidth() {
-        return (int) (100 * density);
+        return viewConfig.desiredWidth;
     }
 
     private int desiredHeight() {
