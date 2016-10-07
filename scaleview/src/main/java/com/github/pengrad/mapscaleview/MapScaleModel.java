@@ -32,7 +32,7 @@ class MapScaleModel {
         int distanceIndex = meters.length;
         double screenDistance = maxWidth + 1;
 
-        while (screenDistance > maxWidth) {
+        while (screenDistance > maxWidth && distanceIndex > 0) {
             distance = meters[--distanceIndex];
 
             LatLng dest = DistanceUtils.translatePoint(src, distance, 120);
