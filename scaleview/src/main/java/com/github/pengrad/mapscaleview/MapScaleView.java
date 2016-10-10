@@ -16,6 +16,10 @@ public class MapScaleView extends View {
     private final ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
+    private final float textHeight;
+    private final float strokeWidth;
+    private final float horizontalLineY;
+
     private Scale scale;
 
     public MapScaleView(Context context) {
@@ -38,6 +42,14 @@ public class MapScaleView extends View {
         paint.setTextSize(viewConfig.textSize);
         paint.setStrokeWidth(viewConfig.strokeWidth);
         paint.setColor(viewConfig.color);
+
+        strokeWidth = viewConfig.strokeWidth;
+
+        Rect textRect = new Rect();
+        paint.getTextBounds("A", 0, 1, textRect);
+        textHeight = textRect.height();
+
+        horizontalLineY = textHeight + textHeight / 2;
     }
 
     public void update(Projection projection, CameraPosition cameraPosition) {
@@ -91,14 +103,9 @@ public class MapScaleView extends View {
         final float lineLength = scale.length();
         final String text = scale.text();
 
-        Rect textRect = new Rect();
-        paint.getTextBounds(text, 0, text.length(), textRect);
+        canvas.drawText(text, 0, textHeight, paint);
 
-        canvas.drawText(text, 0, textRect.height(), paint);
-
-        int textHeight = textRect.height();
-        float horizontalLineY = textHeight + textHeight / 2;
-        float verticalLineX = lineLength - paint.getStrokeWidth() / 2;
+        float verticalLineX = lineLength - strokeWidth / 2;
 
         canvas.drawLine(0, horizontalLineY, lineLength, horizontalLineY, paint);
         canvas.drawLine(verticalLineX, horizontalLineY, verticalLineX, textHeight, paint);

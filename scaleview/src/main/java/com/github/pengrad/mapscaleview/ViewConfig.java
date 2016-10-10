@@ -15,6 +15,7 @@ class ViewConfig {
 
 
     ViewConfig(Context context, AttributeSet attrs) {
+//        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         float density = context.getResources().getDisplayMetrics().density;
 
         desiredWidth = (int) (100 * density);
