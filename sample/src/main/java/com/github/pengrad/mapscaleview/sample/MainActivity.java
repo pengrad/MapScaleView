@@ -31,14 +31,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
 
-//        googleMap.setOnCameraMoveListener(this);
+        googleMap.setOnCameraMoveListener(this);
         googleMap.setOnCameraIdleListener(this);
         googleMap.setOnCameraChangeListener(this);
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21, 105.8), 10));
     }
-
-
 
     @Override
     public void onCameraMove() {
