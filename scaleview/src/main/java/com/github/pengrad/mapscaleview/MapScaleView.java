@@ -12,8 +12,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 
 public class MapScaleView extends View {
 
-    private  Paint paint;
-    private ViewConfig viewConfig;
+    private final Paint paint;
+    private final ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
     private float textHeight;
@@ -21,6 +21,8 @@ public class MapScaleView extends View {
     private float horizontalLineY;
 
     private Scale scale;
+
+    private boolean isInit = false;
 
     public MapScaleView(Context context) {
         this(context, null);
@@ -34,13 +36,20 @@ public class MapScaleView extends View {
         super(context, attrs, defStyleAttr);
 
         mapScaleModel = new MapScaleModel();
-        setViewConfig(new ViewConfig(context, attrs));
-    }
-
-    public void setViewConfig(ViewConfig viewConfig){
-        this.viewConfig = viewConfig;
+        viewConfig = new ViewConfig(context, attrs);
         paint = new Paint();
         paint.setAntiAlias(true);
+        setViewConfig(viewConfig);
+    }
+
+    public void setViewConfig(ViewConfig vc) {
+        //Copy ViewConfig
+        this.viewConfig.setColor(vc.getColor());
+        this.viewConfig.setDesiredWidth(vc.getDesiredWidth());
+        this.viewConfig.setStrokeWidth(vc.getStrokeWidth());
+        this.viewConfig.setTextSize(vc.getTextSize());
+        //Update Paint
+
         paint.setTextSize(viewConfig.getTextSize());
         paint.setStrokeWidth(viewConfig.getStrokeWidth());
         paint.setColor(viewConfig.getColor());
@@ -49,6 +58,7 @@ public class MapScaleView extends View {
         paint.getTextBounds("A", 0, 1, textRect);
         textHeight = textRect.height();
         horizontalLineY = textHeight + textHeight / 2;
+
     }
 
     public ViewConfig getViewConfig() {

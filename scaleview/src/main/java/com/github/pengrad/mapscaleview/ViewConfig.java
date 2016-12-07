@@ -11,7 +11,6 @@ public class ViewConfig {
     private int color;
     private float textSize;
     private float strokeWidth;
-
     private int desiredWidth;
 
     private Context context;
@@ -19,7 +18,6 @@ public class ViewConfig {
 
     ViewConfig(Context context, AttributeSet attrs) {
         this.context = context;
-//        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         float density = context.getResources().getDisplayMetrics().density;
 
         desiredWidth = (int) (100 * density);
@@ -43,8 +41,8 @@ public class ViewConfig {
         this.color = color;
     }
 
-    public void setColorResId(int colorResId){
-        setColor(ResourcesCompat.getColor(context.getResources(),colorResId,null));
+    public void setColorResId(int colorResId) {
+        setColor(ResourcesCompat.getColor(context.getResources(), colorResId, null));
     }
 
     public float getTextSize() {
@@ -69,5 +67,17 @@ public class ViewConfig {
 
     public void setDesiredWidth(int desiredWidth) {
         this.desiredWidth = desiredWidth;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ViewConfig){
+            ViewConfig config = (ViewConfig) obj;
+            return getDesiredWidth() == config.getDesiredWidth() &&
+                    getColor() == config.getColor() &&
+                    getStrokeWidth() == config.getStrokeWidth() &&
+                    getTextSize() == config.getTextSize();
+        }
+        return false;
     }
 }
