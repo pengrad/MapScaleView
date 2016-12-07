@@ -12,13 +12,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 
 public class MapScaleView extends View {
 
-    private final Paint paint;
-    private final ViewConfig viewConfig;
+    private  Paint paint;
+    private ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
-    private final float textHeight;
-    private final float strokeWidth;
-    private final float horizontalLineY;
+    private float textHeight;
+    private float strokeWidth;
+    private float horizontalLineY;
 
     private Scale scale;
 
@@ -34,22 +34,25 @@ public class MapScaleView extends View {
         super(context, attrs, defStyleAttr);
 
         mapScaleModel = new MapScaleModel();
+        setViewConfig(new ViewConfig(context, attrs));
+    }
 
-        viewConfig = new ViewConfig(context, attrs);
-
+    public void setViewConfig(ViewConfig viewConfig){
+        this.viewConfig = viewConfig;
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setTextSize(viewConfig.textSize);
-        paint.setStrokeWidth(viewConfig.strokeWidth);
-        paint.setColor(viewConfig.color);
-
-        strokeWidth = viewConfig.strokeWidth;
-
+        paint.setTextSize(viewConfig.getTextSize());
+        paint.setStrokeWidth(viewConfig.getStrokeWidth());
+        paint.setColor(viewConfig.getColor());
+        strokeWidth = viewConfig.getStrokeWidth();
         Rect textRect = new Rect();
         paint.getTextBounds("A", 0, 1, textRect);
         textHeight = textRect.height();
-
         horizontalLineY = textHeight + textHeight / 2;
+    }
+
+    public ViewConfig getViewConfig() {
+        return viewConfig;
     }
 
     public void update(Projection projection, CameraPosition cameraPosition) {
@@ -68,7 +71,7 @@ public class MapScaleView extends View {
     }
 
     private int desiredWidth() {
-        return viewConfig.desiredWidth;
+        return viewConfig.getDesiredWidth();
     }
 
     private int desiredHeight() {

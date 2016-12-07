@@ -3,18 +3,22 @@ package com.github.pengrad.mapscaleview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 
-class ViewConfig {
+public class ViewConfig {
 
-    final int color;
-    final float textSize;
-    final float strokeWidth;
+    private int color;
+    private float textSize;
+    private float strokeWidth;
 
-    final int desiredWidth;
+    private int desiredWidth;
+
+    private Context context;
 
 
     ViewConfig(Context context, AttributeSet attrs) {
+        this.context = context;
 //        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         float density = context.getResources().getDisplayMetrics().density;
 
@@ -31,4 +35,39 @@ class ViewConfig {
 
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public void setColorResId(int colorResId){
+        setColor(ResourcesCompat.getColor(context.getResources(),colorResId,null));
+    }
+
+    public float getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+    }
+
+    public float getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    public int getDesiredWidth() {
+        return desiredWidth;
+    }
+
+    public void setDesiredWidth(int desiredWidth) {
+        this.desiredWidth = desiredWidth;
+    }
 }
