@@ -22,8 +22,6 @@ public class MapScaleView extends View {
 
     private Scale scale;
 
-    private boolean isInit = false;
-
     public MapScaleView(Context context) {
         this(context, null);
     }
