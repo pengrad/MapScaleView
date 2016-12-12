@@ -3,21 +3,18 @@ package com.github.pengrad.mapscaleview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 
-public class ViewConfig {
+class ViewConfig {
 
-    private int color;
-    private float textSize;
-    private float strokeWidth;
-    private int desiredWidth;
+    int color;
+    float textSize;
+    float strokeWidth;
+    int desiredWidth;
 
-    private Context context;
 
 
     ViewConfig(Context context, AttributeSet attrs) {
-        this.context = context;
         float density = context.getResources().getDisplayMetrics().density;
 
         desiredWidth = (int) (100 * density);
@@ -33,51 +30,7 @@ public class ViewConfig {
 
     }
 
-    public int getColor() {
-        return color;
-    }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
 
-    public void setColorResId(int colorResId) {
-        setColor(ResourcesCompat.getColor(context.getResources(), colorResId, null));
-    }
 
-    public float getTextSize() {
-        return textSize;
-    }
-
-    public void setTextSize(float textSize) {
-        this.textSize = textSize;
-    }
-
-    public float getStrokeWidth() {
-        return strokeWidth;
-    }
-
-    public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
-    }
-
-    public int getDesiredWidth() {
-        return desiredWidth;
-    }
-
-    public void setDesiredWidth(int desiredWidth) {
-        this.desiredWidth = desiredWidth;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof ViewConfig){
-            ViewConfig config = (ViewConfig) obj;
-            return getDesiredWidth() == config.getDesiredWidth() &&
-                    getColor() == config.getColor() &&
-                    getStrokeWidth() == config.getStrokeWidth() &&
-                    getTextSize() == config.getTextSize();
-        }
-        return false;
-    }
 }

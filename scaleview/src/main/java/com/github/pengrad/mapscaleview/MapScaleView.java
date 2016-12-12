@@ -37,31 +37,20 @@ public class MapScaleView extends View {
         viewConfig = new ViewConfig(context, attrs);
         paint = new Paint();
         paint.setAntiAlias(true);
-        setViewConfig(viewConfig);
-    }
-
-    public void setViewConfig(ViewConfig vc) {
-        //Copy ViewConfig
-        this.viewConfig.setColor(vc.getColor());
-        this.viewConfig.setDesiredWidth(vc.getDesiredWidth());
-        this.viewConfig.setStrokeWidth(vc.getStrokeWidth());
-        this.viewConfig.setTextSize(vc.getTextSize());
-        //Update Paint
-
-        paint.setTextSize(viewConfig.getTextSize());
-        paint.setStrokeWidth(viewConfig.getStrokeWidth());
-        paint.setColor(viewConfig.getColor());
-        strokeWidth = viewConfig.getStrokeWidth();
+        paint.setTextSize(viewConfig.textSize);
+        paint.setStrokeWidth(viewConfig.strokeWidth);
+        paint.setColor(viewConfig.color);
+        strokeWidth = viewConfig.strokeWidth;
         Rect textRect = new Rect();
         paint.getTextBounds("A", 0, 1, textRect);
         textHeight = textRect.height();
         horizontalLineY = textHeight + textHeight / 2;
-
     }
 
-    public ViewConfig getViewConfig() {
-        return viewConfig;
+    public void setColor(int color){
+        paint.setColor(color);
     }
+
 
     public void update(Projection projection, CameraPosition cameraPosition) {
         scale = mapScaleModel.setProjection(projection, cameraPosition);
@@ -79,7 +68,7 @@ public class MapScaleView extends View {
     }
 
     private int desiredWidth() {
-        return viewConfig.getDesiredWidth();
+        return viewConfig.desiredWidth;
     }
 
     private int desiredHeight() {
