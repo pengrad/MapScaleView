@@ -10,12 +10,11 @@ class ViewConfig {
     final int color;
     final float textSize;
     final float strokeWidth;
-
     final int desiredWidth;
 
 
+
     ViewConfig(Context context, AttributeSet attrs) {
-//        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         float density = context.getResources().getDisplayMetrics().density;
 
         desiredWidth = (int) (100 * density);
@@ -30,5 +29,8 @@ class ViewConfig {
         }
 
     }
+
+
+
 
 }

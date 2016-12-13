@@ -34,24 +34,22 @@ public class MapScaleView extends View {
         super(context, attrs, defStyleAttr);
 
         mapScaleModel = new MapScaleModel();
-
         viewConfig = new ViewConfig(context, attrs);
-
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(viewConfig.textSize);
         paint.setStrokeWidth(viewConfig.strokeWidth);
         paint.setColor(viewConfig.color);
-
         strokeWidth = viewConfig.strokeWidth;
-
         Rect textRect = new Rect();
         paint.getTextBounds("A", 0, 1, textRect);
         textHeight = textRect.height();
-
         horizontalLineY = textHeight + textHeight / 2;
     }
 
+    public void setColor(int color){
+        paint.setColor(color);
+    }
     public void update(Projection projection, CameraPosition cameraPosition) {
         scale = mapScaleModel.setProjection(projection, cameraPosition);
         invalidate();
