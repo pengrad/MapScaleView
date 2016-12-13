@@ -7,10 +7,10 @@ import android.util.AttributeSet;
 
 class ViewConfig {
 
-    int color;
-    float textSize;
-    float strokeWidth;
-    int desiredWidth;
+    final int color;
+    final float textSize;
+    final float strokeWidth;
+    final int desiredWidth;
 
 
 
