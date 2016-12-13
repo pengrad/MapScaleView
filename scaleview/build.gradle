@@ -13,7 +13,6 @@ android {
 
 dependencies {
     compile 'com.google.android.gms:play-services-maps:9.6.1'
-    compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

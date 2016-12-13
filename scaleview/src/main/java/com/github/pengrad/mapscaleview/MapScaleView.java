@@ -50,8 +50,6 @@ public class MapScaleView extends View {
     public void setColor(int color){
         paint.setColor(color);
     }
-
-
     public void update(Projection projection, CameraPosition cameraPosition) {
         scale = mapScaleModel.setProjection(projection, cameraPosition);
         invalidate();
