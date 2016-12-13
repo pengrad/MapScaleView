@@ -16,9 +16,9 @@ public class MapScaleView extends View {
     private final ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
-    private float textHeight;
-    private float strokeWidth;
-    private float horizontalLineY;
+    private final float textHeight;
+    private final float strokeWidth;
+    private final float horizontalLineY;
 
     private Scale scale;
 
