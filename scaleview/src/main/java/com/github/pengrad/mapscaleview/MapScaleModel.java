@@ -1,7 +1,5 @@
 package com.github.pengrad.mapscaleview;
 
-import com.google.android.gms.maps.model.CameraPosition;
-
 class MapScaleModel {
 
     private static final double TILE_SIZE_AT_0_ZOOM = 156543.03;
@@ -12,6 +10,7 @@ class MapScaleModel {
     private int maxWidth;
 
     private float lastZoom = -1;
+    private double lastLatitude = -1;
     private Scale scale;
 
     MapScaleModel() {
@@ -24,12 +23,10 @@ class MapScaleModel {
     /**
      * See http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Resolution_and_Scale
      */
-    Scale setCameraPosition(CameraPosition cameraPosition) {
-        if (lastZoom == cameraPosition.zoom) return scale;
+    Scale update(final float zoom, final double latitude) {
+        if (lastZoom == zoom && lastLatitude == latitude) return scale;
 
-        final float zoom = cameraPosition.zoom;
-        final double latitude = cameraPosition.target.latitude;
-        final double resolution = TILE_SIZE_AT_0_ZOOM * Math.cos(latitude) / Math.pow(2, zoom);
+        final double resolution = TILE_SIZE_AT_0_ZOOM * Math.cos(latitude * Math.PI / 180) / Math.pow(2, zoom);
 
         int distance = 0;
         int distanceIndex = meters.length;
@@ -41,6 +38,7 @@ class MapScaleModel {
         }
 
         lastZoom = zoom;
+        lastLatitude = latitude;
         scale = new Scale(text(distance), (float) screenDistance);
 
         return scale;

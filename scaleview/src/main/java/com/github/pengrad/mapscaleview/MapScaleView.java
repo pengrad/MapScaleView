@@ -60,8 +60,16 @@ public class MapScaleView extends View {
         update(cameraPosition);
     }
 
+    /**
+     * @deprecated User update(zoom, latitude)
+     */
+    @Deprecated
     public void update(CameraPosition cameraPosition) {
-        scale = mapScaleModel.setCameraPosition(cameraPosition);
+        update(cameraPosition.zoom, cameraPosition.target.latitude);
+    }
+
+    public void update(float zoom, double latitude) {
+        scale = mapScaleModel.update(zoom, latitude);
         invalidate();
     }
 
