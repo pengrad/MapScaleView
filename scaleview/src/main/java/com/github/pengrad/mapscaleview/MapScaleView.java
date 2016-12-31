@@ -52,8 +52,16 @@ public class MapScaleView extends View {
         horizontalLineY = textHeight + textHeight / 2;
     }
 
+    /**
+     * @deprecated Use update(cameraPosition)
+     */
+    @Deprecated
     public void update(Projection projection, CameraPosition cameraPosition) {
-        scale = mapScaleModel.setProjection(projection, cameraPosition);
+        update(cameraPosition);
+    }
+
+    public void update(CameraPosition cameraPosition) {
+        scale = mapScaleModel.setCameraPosition(cameraPosition);
         invalidate();
     }
 
