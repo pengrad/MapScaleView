@@ -33,9 +33,10 @@ public class MapScaleView extends View {
     public MapScaleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        mapScaleModel = new MapScaleModel();
-
         viewConfig = new ViewConfig(context, attrs);
+
+        mapScaleModel = new MapScaleModel();
+        mapScaleModel.setIsMiles(viewConfig.isMiles);
 
         paint = new Paint();
         paint.setAntiAlias(true);

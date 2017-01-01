@@ -3,5 +3,6 @@
         <attr name="scale_textSize" format="dimension"/>
         <attr name="scale_strokeWidth" format="dimension"/>
         <attr name="scale_color" format="color"/>
+        <attr name="scale_miles" format="boolean"/>
     </declare-styleable>
 </resources>
