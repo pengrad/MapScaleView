@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,9 +17,9 @@ public class MapScaleView extends View {
     private final ViewConfig viewConfig;
     private final MapScaleModel mapScaleModel;
 
-    private final float textHeight;
-    private final float strokeWidth;
-    private final float horizontalLineY;
+    private float textHeight;
+    private float strokeWidth;
+    private float horizontalLineY;
 
     private Scale scale;
 
@@ -41,16 +42,40 @@ public class MapScaleView extends View {
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(viewConfig.textSize);
-        paint.setStrokeWidth(viewConfig.strokeWidth);
         paint.setColor(viewConfig.color);
-
+        paint.setStrokeWidth(viewConfig.strokeWidth);
         strokeWidth = viewConfig.strokeWidth;
 
+        updateTextHeight();
+    }
+
+    private void updateTextHeight() {
         Rect textRect = new Rect();
         paint.getTextBounds("A", 0, 1, textRect);
         textHeight = textRect.height();
-
         horizontalLineY = textHeight + textHeight / 2;
+    }
+
+    public void setColor(@ColorInt int color) {
+        paint.setColor(color);
+        invalidate();
+    }
+
+    public void setTextSize(float textSize) {
+        paint.setTextSize(textSize);
+        updateTextHeight();
+        invalidate();
+    }
+
+    public void setStrokeWidth(float strokeWidth) {
+        this.strokeWidth = strokeWidth;
+        paint.setStrokeWidth(strokeWidth);
+        invalidate();
+    }
+
+    public void setIsMiles(boolean miles) {
+        mapScaleModel.setIsMiles(miles);
+        invalidate();
     }
 
     /**
@@ -108,17 +133,15 @@ public class MapScaleView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         canvas.save();
-
         drawView(canvas, paint);
-
         canvas.restore();
     }
 
     private void drawView(Canvas canvas, Paint paint) {
         if (scale == null) return;
 
-        final float lineLength = scale.length();
         final String text = scale.text();
+        final float lineLength = scale.length();
 
         canvas.drawText(text, 0, textHeight, paint);
 

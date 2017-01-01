@@ -7,13 +7,12 @@ import android.util.AttributeSet;
 
 class ViewConfig {
 
+    final int desiredWidth;
+
     final int color;
     final float textSize;
     final float strokeWidth;
     final boolean isMiles;
-
-    final int desiredWidth;
-
 
     ViewConfig(Context context, AttributeSet attrs) {
 //        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
@@ -30,7 +29,5 @@ class ViewConfig {
         } finally {
             a.recycle();
         }
-
     }
-
 }
