@@ -104,7 +104,7 @@ public class MapScaleView extends View {
         int width = measureDimension(desiredWidth(), widthMeasureSpec);
         int height = measureDimension(desiredHeight(), heightMeasureSpec);
 
-        mapScaleModel.setMaxWidth(width);
+        scale = mapScaleModel.setMaxWidth(width);
 
         setMeasuredDimension(width, height);
     }

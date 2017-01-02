@@ -25,8 +25,9 @@ class MapScaleModel {
     MapScaleModel() {
     }
 
-    void setMaxWidth(int width) {
+    Scale setMaxWidth(int width) {
         maxWidth = width;
+        return update(lastZoom, lastLatitude);
     }
 
     Scale setIsMiles(boolean miles) {
