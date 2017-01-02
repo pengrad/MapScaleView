@@ -30,7 +30,7 @@ Include in layout file over map
 </FrameLayout>
 ```
 
-Or with custom style
+With miles or custom style
 ```xml
 <com.github.pengrad.mapscaleview.MapScaleView
         android:id="@+id/scaleView"
@@ -39,6 +39,7 @@ Or with custom style
         android:layout_gravity="bottom|end"
         android:layout_margin="4dp"
         app:scale_color="#009"
+        app:scale_miles="true"
         app:scale_strokeWidth="3dp"
         app:scale_textSize="20sp"/>
 ```
@@ -46,7 +47,8 @@ Or with custom style
 Update on map changed
 ```java
 MapScaleView scaleView = (MapScaleView) findViewById(R.id.scaleView);
-scaleView.update(map.getProjection(), map.getCameraPosition());
+CameraPosition cameraPosition = map.getCameraPosition();
+scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 ```
 
 Full example with subscribing to map events and updating scale view
@@ -61,17 +63,19 @@ public void onMapReady(GoogleMap googleMap) {
 
 @Override
 public void onCameraMove() {
-    scaleView.update(map.getProjection(), map.getCameraPosition());
+    CameraPosition cameraPosition = map.getCameraPosition();
+    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 }
 
 @Override
 public void onCameraIdle() {
-    scaleView.update(map.getProjection(), map.getCameraPosition());
+    CameraPosition cameraPosition = map.getCameraPosition();
+    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 }
 
 @Override
 public void onCameraChange(CameraPosition cameraPosition) {
-    scaleView.update(map.getProjection(), cameraPosition);
+    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 }
 ```
 
@@ -90,7 +94,7 @@ allprojects {
 **Step 2.** Add the dependency
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:MapScaleView:1.0.0'
+    compile 'com.github.pengrad:MapScaleView:1.1.0'
 }
 ```
 
