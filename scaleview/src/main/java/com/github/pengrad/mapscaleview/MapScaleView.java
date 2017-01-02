@@ -145,7 +145,7 @@ public class MapScaleView extends View {
 
         canvas.drawText(text, 0, textHeight, paint);
 
-        float verticalLineX = lineLength - strokeWidth / 2;
+        float verticalLineX = Math.round(lineLength - strokeWidth / 2);
 
         canvas.drawLine(0, horizontalLineY, lineLength, horizontalLineY, paint);
         canvas.drawLine(verticalLineX, horizontalLineY, verticalLineX, textHeight, paint);
