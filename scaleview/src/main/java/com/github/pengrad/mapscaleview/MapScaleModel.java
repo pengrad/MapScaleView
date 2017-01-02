@@ -21,17 +21,17 @@ class MapScaleModel {
 
     private float lastZoom = -1;
     private double lastLatitude = -1;
-    private Scale scale;
 
     MapScaleModel() {
     }
 
     void setMaxWidth(int width) {
         maxWidth = width;
-        lastZoom = -1;
     }
 
-    void setIsMiles(boolean miles) {
+    Scale setIsMiles(boolean miles) {
+        isMiles = miles;
+
         if (miles) {
             tileSizeAtZoom0 = TILE_SIZE_FT_AT_0_ZOOM;
             distances = FT;
@@ -39,15 +39,15 @@ class MapScaleModel {
             tileSizeAtZoom0 = TILE_SIZE_METERS_AT_0_ZOOM;
             distances = METERS;
         }
-        isMiles = miles;
-        lastZoom = -1;
+
+        return update(lastZoom, lastLatitude);
     }
 
     /**
      * See http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Resolution_and_Scale
      */
     Scale update(final float zoom, final double latitude) {
-        if (lastZoom == zoom && lastLatitude == latitude) return scale;
+        if (zoom < 0 || latitude < 0) return null;
 
         final double resolution = tileSizeAtZoom0 * Math.cos(latitude * Math.PI / 180) / Math.pow(2, zoom);
 
@@ -62,9 +62,7 @@ class MapScaleModel {
 
         lastZoom = zoom;
         lastLatitude = latitude;
-        scale = new Scale(text(distance), (float) screenDistance);
-
-        return scale;
+        return new Scale(text(distance), (float) screenDistance);
     }
 
     private String text(int distance) {

@@ -74,7 +74,7 @@ public class MapScaleView extends View {
     }
 
     public void setIsMiles(boolean miles) {
-        mapScaleModel.setIsMiles(miles);
+        scale = mapScaleModel.setIsMiles(miles);
         invalidate();
     }
 
