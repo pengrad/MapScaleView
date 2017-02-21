@@ -6,16 +6,9 @@ android {
 
     defaultConfig {
         minSdkVersion 9
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 }
 
 dependencies {
     compile 'com.google.android.gms:play-services-maps:9.6.1'
-
-    testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
 }
