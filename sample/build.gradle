@@ -20,4 +20,5 @@ android {
 dependencies {
     compile project(':scaleview')
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.6.1'
 }

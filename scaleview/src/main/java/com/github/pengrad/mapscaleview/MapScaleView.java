@@ -8,9 +8,6 @@ import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.google.android.gms.maps.Projection;
-import com.google.android.gms.maps.model.CameraPosition;
-
 public class MapScaleView extends View {
 
     private final Paint paint;
@@ -76,22 +73,6 @@ public class MapScaleView extends View {
     public void setIsMiles(boolean miles) {
         scale = mapScaleModel.setIsMiles(miles);
         invalidate();
-    }
-
-    /**
-     * @deprecated Use update(cameraPosition)
-     */
-    @Deprecated
-    public void update(Projection projection, CameraPosition cameraPosition) {
-        update(cameraPosition);
-    }
-
-    /**
-     * @deprecated User update(zoom, latitude)
-     */
-    @Deprecated
-    public void update(CameraPosition cameraPosition) {
-        update(cameraPosition.zoom, cameraPosition.target.latitude);
     }
 
     public void update(float zoom, double latitude) {
