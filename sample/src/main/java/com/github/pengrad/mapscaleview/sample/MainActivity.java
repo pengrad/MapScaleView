@@ -66,24 +66,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void changeColor(View view) {
-        scaleView.setColor(Color.parseColor("#991111"));
+        Random random = new Random();
+        int color = Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        scaleView.setColor(color);
     }
 
     public void changeTextSize(View view) {
-        scaleView.setTextSize(18);
+        scaleView.setTextSize(new Random().nextInt(20) + 14);
     }
 
     public void changeStrokeWidth(View view) {
-        scaleView.setStrokeWidth(2);
+        scaleView.setStrokeWidth(new Random().nextInt(7) + 1);
     }
 
+    private boolean isMiles = false;
+
     public void changeMiles(View view) {
-        scaleView.setIsMiles(true);
+        isMiles = !isMiles;
+        scaleView.setIsMiles(isMiles);
     }
 
     public void changeSize(View view) {
         ViewGroup.LayoutParams layoutParams = scaleView.getLayoutParams();
-        layoutParams.width = new Random().nextBoolean() ? 400 : 200;
+        layoutParams.width = new Random().nextInt(200) + 200;
         scaleView.requestLayout();
     }
 }

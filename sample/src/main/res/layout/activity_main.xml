@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginRight="4dp"
         app:scale_miles="true"/>
 
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="4dp"
+        android:layout_margin="8dp"
         app:scale_color="#009"
         app:scale_strokeWidth="3dp"
         app:scale_textSize="20sp"/>
