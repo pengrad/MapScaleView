@@ -94,7 +94,7 @@ allprojects {
 **Step 2.** Add the dependency
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:MapScaleView:1.1.0'
+    compile 'com.github.pengrad:MapScaleView:1.2.0'
 }
 ```
 
