@@ -113,12 +113,6 @@ public class MapScaleView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        canvas.save();
-        drawView(canvas, paint);
-        canvas.restore();
-    }
-
-    private void drawView(Canvas canvas, Paint paint) {
         if (scale == null) return;
 
         final String text = scale.text();
