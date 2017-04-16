@@ -80,21 +80,9 @@ public void onCameraChange(CameraPosition cameraPosition) {
 ```
 
 # Download
-
-**Step 1.** Add the JitPack repository to your build file
-```groovy
-allprojects {
-    repositories {
-        ...
-        maven { url "https://jitpack.io" }
-    }
-}
-```
-
-**Step 2.** Add the dependency
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:MapScaleView:1.2.0'
+    compile 'com.github.pengrad:mapscaleview:1.2.0'
 }
 ```
 
