@@ -1,0 +1,48 @@
+/*
+deps to build.gradle
+
+classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+ */
+
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.pengrad'
+version = '1.2.0'
+
+bintray {
+    user = BINTRAY_USER
+    key = BINTRAY_KEY
+    pkg {
+        repo = 'maven'
+        name = 'mapscaleview'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/pengrad/MapScaleView.git'
+        websiteUrl = 'https://github.com/pengrad/MapScaleView'
+    }
+    configurations = ['archives']
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task javadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
+
+task javadocsJar(type: Jar) {
+    from javadocs.destinationDir
+    classifier 'javadoc'
+}
+
+javadocsJar.dependsOn javadocs
+
+artifacts {
+    archives javadocsJar
+    archives sourcesJar
+}
