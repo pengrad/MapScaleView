@@ -3,7 +3,7 @@
 [![](https://jitpack.io/v/pengrad/MapScaleView.svg)](https://jitpack.io/#pengrad/MapScaleView)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MapScaleView-green.svg?style=true)](https://android-arsenal.com/details/1/4541)
 
-Scale view for Google Maps Android API  
+Scale view for any Android Maps SDK (not only Google Maps)
 
 ![Image](images/image.png)
 
@@ -49,6 +49,7 @@ Update on map changed
 ```java
 MapScaleView scaleView = (MapScaleView) findViewById(R.id.scaleView);
 CameraPosition cameraPosition = map.getCameraPosition();
+// need to pass zoom and latitude
 scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 ```
 
