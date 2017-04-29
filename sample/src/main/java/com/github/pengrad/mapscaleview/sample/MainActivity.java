@@ -3,6 +3,7 @@ package com.github.pengrad.mapscaleview.sample;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.setOnCameraIdleListener(this);
         googleMap.setOnCameraChangeListener(this);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21, 105.8), 10));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21, 105.8), 10));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.07770360532252, -94.76820822805165), 12));
     }
 
     @Override
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
+        Log.d("++++", "pos " + cameraPosition);
         update(cameraPosition);
     }
 
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void changeTextSize(View view) {
-        scaleView.setTextSize(new Random().nextInt(20) + 14);
+        scaleView.setTextSize(new Random().nextInt(20) + 18);
     }
 
     public void changeStrokeWidth(View view) {
