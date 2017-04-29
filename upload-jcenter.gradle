@@ -14,8 +14,8 @@ group = 'com.github.pengrad'
 version = '1.2.1'
 
 bintray {
-    user = BINTRAY_USER
-    key = BINTRAY_KEY
+    user = hasProperty('BINTRAY_USER') ? BINTRAY_USER : ""
+    key = hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : ""
     pkg {
         repo = 'maven'
         name = 'mapscaleview'
