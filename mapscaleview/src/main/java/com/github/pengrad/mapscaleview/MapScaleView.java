@@ -3,6 +3,7 @@ package com.github.pengrad.mapscaleview;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
@@ -10,12 +11,13 @@ import android.view.View;
 
 public class MapScaleView extends View {
 
-    private final Paint paint;
-    private final ViewConfig viewConfig;
+    private final Paint paint = new Paint();
+    private final Paint strokePaint = new Paint();
+    private final Path strokePath = new Path();
     private final MapScaleModel mapScaleModel;
+    private final int desiredWidth;
 
     private float textHeight;
-    private float strokeWidth;
     private float horizontalLineY;
 
     private Scale scale;
@@ -31,18 +33,24 @@ public class MapScaleView extends View {
     public MapScaleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        viewConfig = new ViewConfig(context, attrs);
+        ViewConfig viewConfig = new ViewConfig(context, attrs);
 
         float density = getResources().getDisplayMetrics().density;
         mapScaleModel = new MapScaleModel(density);
         mapScaleModel.setIsMiles(viewConfig.isMiles);
 
-        paint = new Paint();
+        desiredWidth = viewConfig.desiredWidth;
+        int defaultColor = viewConfig.color;
+
         paint.setAntiAlias(true);
+        paint.setColor(defaultColor);
+        paint.setStyle(Paint.Style.FILL);
         paint.setTextSize(viewConfig.textSize);
-        paint.setColor(viewConfig.color);
-        paint.setStrokeWidth(viewConfig.strokeWidth);
-        strokeWidth = viewConfig.strokeWidth;
+
+        strokePaint.setAntiAlias(true);
+        strokePaint.setColor(defaultColor);
+        strokePaint.setStyle(Paint.Style.STROKE);
+        strokePaint.setStrokeWidth(viewConfig.strokeWidth);
 
         updateTextHeight();
     }
@@ -56,6 +64,7 @@ public class MapScaleView extends View {
 
     public void setColor(@ColorInt int color) {
         paint.setColor(color);
+        strokePaint.setColor(color);
         invalidate();
     }
 
@@ -66,8 +75,7 @@ public class MapScaleView extends View {
     }
 
     public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
-        paint.setStrokeWidth(strokeWidth);
+        strokePaint.setStrokeWidth(strokeWidth);
         invalidate();
     }
 
@@ -92,7 +100,7 @@ public class MapScaleView extends View {
     }
 
     private int desiredWidth() {
-        return viewConfig.desiredWidth;
+        return desiredWidth;
     }
 
     private int desiredHeight() {
@@ -121,9 +129,11 @@ public class MapScaleView extends View {
 
         canvas.drawText(text, 0, textHeight, paint);
 
-        float verticalLineX = lineLength - strokeWidth / 2;
+        strokePath.rewind();
+        strokePath.moveTo(0, horizontalLineY);
+        strokePath.lineTo(lineLength, horizontalLineY);
+        strokePath.lineTo(lineLength, textHeight);
 
-        canvas.drawLine(0, horizontalLineY, lineLength, horizontalLineY, paint);
-        canvas.drawLine(verticalLineX, horizontalLineY, verticalLineX, textHeight, paint);
+        canvas.drawPath(strokePath, strokePaint);
     }
 }
