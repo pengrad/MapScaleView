@@ -33,7 +33,8 @@ public class MapScaleView extends View {
 
         viewConfig = new ViewConfig(context, attrs);
 
-        mapScaleModel = new MapScaleModel();
+        float density = getResources().getDisplayMetrics().density;
+        mapScaleModel = new MapScaleModel(density);
         mapScaleModel.setIsMiles(viewConfig.isMiles);
 
         paint = new Paint();
