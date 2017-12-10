@@ -20,7 +20,13 @@ public class MapScaleView extends View {
     private float textHeight;
     private float horizontalLineY;
 
-    private Scale scale;
+    private Scales scales;
+
+    private ScaleType scaleType = ScaleType.BOTH;
+
+    private enum ScaleType {
+        METERS_ONLY, MILES_ONLY, BOTH
+    }
 
     public MapScaleView(Context context) {
         this(context, null);
@@ -37,7 +43,9 @@ public class MapScaleView extends View {
 
         float density = getResources().getDisplayMetrics().density;
         mapScaleModel = new MapScaleModel(density);
-        mapScaleModel.setIsMiles(viewConfig.isMiles);
+        if (viewConfig.isMiles) {
+            scaleType = ScaleType.MILES_ONLY;
+        }
 
         desiredWidth = viewConfig.desiredWidth;
         int defaultColor = viewConfig.color;
@@ -79,13 +87,48 @@ public class MapScaleView extends View {
         invalidate();
     }
 
+    /**
+     * @deprecated Use milesOnly()
+     */
+    @Deprecated
     public void setIsMiles(boolean miles) {
-        scale = mapScaleModel.setIsMiles(miles);
-        invalidate();
+        if (miles) milesOnly();
+        else metersAndMiles();
+    }
+
+    public void metersOnly() {
+        scaleType = ScaleType.METERS_ONLY;
+        updateScales();
+    }
+
+    public void milesOnly() {
+        scaleType = ScaleType.MILES_ONLY;
+        updateScales();
+    }
+
+    public void metersAndMiles() {
+        scaleType = ScaleType.BOTH;
+        updateScales();
     }
 
     public void update(float zoom, double latitude) {
-        scale = mapScaleModel.update(zoom, latitude);
+        mapScaleModel.setPosition(zoom, latitude);
+        updateScales();
+    }
+
+    private void updateScales() {
+        Scale top, bottom = null;
+
+        if (scaleType == ScaleType.MILES_ONLY) {
+            top = mapScaleModel.update(false);
+        } else {
+            top = mapScaleModel.update(true);
+            if (scaleType == ScaleType.BOTH) {
+                bottom = mapScaleModel.update(false);
+            }
+        }
+
+        scales = new Scales(top, bottom);
         invalidate();
     }
 
@@ -94,7 +137,8 @@ public class MapScaleView extends View {
         int width = measureDimension(desiredWidth(), widthMeasureSpec);
         int height = measureDimension(desiredHeight(), heightMeasureSpec);
 
-        scale = mapScaleModel.setMaxWidth(width);
+        mapScaleModel.setMaxWidth(width);
+        updateScales();
 
         setMeasuredDimension(width, height);
     }
@@ -104,7 +148,7 @@ public class MapScaleView extends View {
     }
 
     private int desiredHeight() {
-        return (int) (paint.getTextSize() * 1.5 + paint.getStrokeWidth());
+        return (int) (paint.getTextSize() * 3 + paint.getStrokeWidth());
     }
 
     private int measureDimension(int desiredSize, int measureSpec) {
@@ -122,17 +166,34 @@ public class MapScaleView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        if (scale == null) return;
+        if (scales == null || scales.top() == null) {
+            return;
+        }
 
-        final String text = scale.text();
-        final float lineLength = scale.length();
+        Scale top = scales.top();
 
-        canvas.drawText(text, 0, textHeight, paint);
+        canvas.drawText(top.text(), 0, textHeight, paint);
 
         strokePath.rewind();
         strokePath.moveTo(0, horizontalLineY);
-        strokePath.lineTo(lineLength, horizontalLineY);
-        strokePath.lineTo(lineLength, textHeight);
+        strokePath.lineTo(top.length(), horizontalLineY);
+        strokePath.lineTo(top.length(), textHeight);
+
+        Scale bottom = scales.bottom();
+        if (bottom != null) {
+
+            if (bottom.length() > top.length()) {
+                strokePath.moveTo(top.length(), horizontalLineY);
+                strokePath.lineTo(bottom.length(), horizontalLineY);
+            } else {
+                strokePath.moveTo(bottom.length(), horizontalLineY);
+            }
+
+            strokePath.lineTo(bottom.length(), textHeight * 2);
+
+            float bottomTextY = horizontalLineY + textHeight + textHeight / 2;
+            canvas.drawText(bottom.text(), 0, bottomTextY, paint);
+        }
 
         canvas.drawPath(strokePath, strokePaint);
     }

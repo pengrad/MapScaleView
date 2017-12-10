@@ -16,9 +16,6 @@ class MapScaleModel {
 
     private final float density;
     private int maxWidth;
-    private boolean isMiles = false;
-    private int[] distances = METERS;
-    private double tileSizeAtZoom0 = TILE_SIZE_METERS_AT_0_ZOOM;
 
     private float lastZoom = -1;
     private double lastLatitude = -100;
@@ -27,30 +24,25 @@ class MapScaleModel {
         this.density = density;
     }
 
-    Scale setMaxWidth(int width) {
+    void setMaxWidth(int width) {
         maxWidth = width;
-        return update(lastZoom, lastLatitude);
     }
 
-    Scale setIsMiles(boolean miles) {
-        isMiles = miles;
-
-        if (miles) {
-            tileSizeAtZoom0 = TILE_SIZE_FT_AT_0_ZOOM;
-            distances = FT;
-        } else {
-            tileSizeAtZoom0 = TILE_SIZE_METERS_AT_0_ZOOM;
-            distances = METERS;
-        }
-
-        return update(lastZoom, lastLatitude);
+    void setPosition(float zoom, double latitude) {
+        lastZoom = zoom;
+        lastLatitude = latitude;
     }
 
     /**
      * See http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Resolution_and_Scale
      */
-    Scale update(final float zoom, final double latitude) {
+    Scale update(boolean meters) {
+        float zoom = lastZoom;
+        double latitude = lastLatitude;
         if (zoom < 0 || Math.abs(latitude) > 90) return null;
+
+        double tileSizeAtZoom0 = meters ? TILE_SIZE_METERS_AT_0_ZOOM : TILE_SIZE_FT_AT_0_ZOOM;
+        int[] distances = meters ? METERS : FT;
 
         final double resolution = tileSizeAtZoom0 / density * Math.cos(latitude * Math.PI / 180) / Math.pow(2, zoom);
 
@@ -65,16 +57,16 @@ class MapScaleModel {
 
         lastZoom = zoom;
         lastLatitude = latitude;
-        return new Scale(text(distance), (float) screenDistance);
+        return new Scale(text(distance, meters), (float) screenDistance);
     }
 
-    private String text(int distance) {
-        if (isMiles) {
-            if (distance < FT_IN_MILE) return distance + " ft";
-            else return distance / FT_IN_MILE + " mi";
-        } else {
+    private String text(int distance, boolean meters) {
+        if (meters) {
             if (distance < 1000) return distance + " m";
             else return distance / 1000 + " km";
+        } else {
+            if (distance < FT_IN_MILE) return distance + " ft";
+            else return distance / FT_IN_MILE + " mi";
         }
     }
 }

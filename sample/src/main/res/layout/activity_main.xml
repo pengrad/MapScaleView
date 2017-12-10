@@ -46,6 +46,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="changeMeters"
+            android:text="meters"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="changeSize"
             android:text="size"/>
     </LinearLayout>

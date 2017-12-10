@@ -89,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         scaleView.setIsMiles(isMiles);
     }
 
+    private boolean isMeters = false;
+
+    public void changeMeters(View view) {
+        isMeters = !isMeters;
+        if (isMeters) scaleView.metersOnly();
+        else scaleView.metersAndMiles();
+    }
+
     public void changeSize(View view) {
         ViewGroup.LayoutParams layoutParams = scaleView.getLayoutParams();
         layoutParams.width = new Random().nextInt(200) + 200;
