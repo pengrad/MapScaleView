@@ -83,7 +83,7 @@ public void onCameraChange(CameraPosition cameraPosition) {
 # Download
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:mapscaleview:1.2.1'
+    compile 'com.github.pengrad:mapscaleview:1.3.0'
 }
 ```
 
