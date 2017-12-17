@@ -36,7 +36,7 @@ public class MapScaleView extends View {
         mapScaleModel = new MapScaleModel(density);
 
         ViewConfig viewConfig = new ViewConfig(context, attrs);
-        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, viewConfig.outline);
+        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline);
 
         desiredWidth = viewConfig.desiredWidth;
 

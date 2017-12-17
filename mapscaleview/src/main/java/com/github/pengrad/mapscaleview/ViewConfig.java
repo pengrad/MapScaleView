@@ -25,7 +25,7 @@ class ViewConfig {
         try {
             color = a.getColor(R.styleable.MapScaleView_scale_color, Color.parseColor("#333333"));
             textSize = a.getDimension(R.styleable.MapScaleView_scale_textSize, 12 * density);
-            strokeWidth = a.getDimension(R.styleable.MapScaleView_scale_strokeWidth, 1.5f * density + 0.5f);
+            strokeWidth = a.getDimension(R.styleable.MapScaleView_scale_strokeWidth, 1.5f * density);
             isMiles = a.getBoolean(R.styleable.MapScaleView_scale_miles, false);
             outline = a.getBoolean(R.styleable.MapScaleView_scale_outline, true);
         } finally {

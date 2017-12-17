@@ -15,13 +15,13 @@ public class Drawer {
     private final Path outlineDiffPath = new Path();
     private float outlineStrokeWidth = 2; // strokeWidth * 2
     private float outlineStrokeDiff = outlineStrokeWidth / 2 / 2;  // strokeWidth / 2
-    private float outlineTextStrokeWidth = 2; // const
+    private float outlineTextStrokeWidth = 3; // density * 2
     private boolean outlineEnabled = true;
 
     private float textHeight;
     private float horizontalLineY;
 
-    Drawer(int color, float textSize, float strokeWidth, boolean outlineEnabled) {
+    Drawer(int color, float textSize, float strokeWidth, float density, boolean outlineEnabled) {
         textPaint.setAntiAlias(true);
         textPaint.setColor(color);
         textPaint.setStyle(Paint.Style.FILL);
@@ -36,6 +36,7 @@ public class Drawer {
         outlinePaint.setARGB(255, 255, 255, 255);
         outlineStrokeWidth = strokeWidth * 2;
         outlineStrokeDiff = strokeWidth / 2;
+        outlineTextStrokeWidth = density * 2;
         this.outlineEnabled = outlineEnabled;
 
         update();
