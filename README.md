@@ -40,6 +40,7 @@ With miles or custom style
         android:layout_margin="4dp"
         app:scale_color="#009"
         app:scale_miles="true"
+        app:scale_outline="true"
         app:scale_strokeWidth="3dp"
         app:scale_textSize="20sp"/>
 ```
@@ -78,6 +79,20 @@ public void onCameraIdle() {
 public void onCameraChange(CameraPosition cameraPosition) {
     scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
 }
+```
+
+# Customization
+```java
+mapScaleView.setColor(@ColorInt int color)
+mapScaleView.setTextSize(float textSize)
+mapScaleView.setStrokeWidth(float strokeWidth)
+
+// enable/disable white outline
+mapScaleView.setOutlineEnabled(boolean enabled)
+
+mapScaleView.metersAndMiles() // default
+mapScaleView.metersOnly()
+mapScaleView.milesOnly()
 ```
 
 # Download
