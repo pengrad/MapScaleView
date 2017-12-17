@@ -102,4 +102,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         layoutParams.width = new Random().nextInt(200) + 200;
         scaleView.requestLayout();
     }
+
+    private boolean outline = true;
+
+    public void changeOutline(View view) {
+        outline = !outline;
+        scaleView.setOutlineEnabled(outline);
+    }
 }

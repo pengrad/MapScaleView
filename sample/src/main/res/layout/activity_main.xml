@@ -54,6 +54,12 @@
             android:layout_height="wrap_content"
             android:onClick="changeSize"
             android:text="size"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeOutline"
+            android:text="outline"/>
     </LinearLayout>
 
     <com.github.pengrad.mapscaleview.MapScaleView
@@ -63,6 +69,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="80dp"
         android:layout_marginRight="4dp"
+        app:scale_outline="false"
         app:scale_miles="true"/>
 
     <com.github.pengrad.mapscaleview.MapScaleView
@@ -71,8 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
-        app:scale_color="#009"
-        app:scale_strokeWidth="3dp"
+        app:scale_color="#339cdc"
         app:scale_textSize="20sp"/>
 
 </FrameLayout>

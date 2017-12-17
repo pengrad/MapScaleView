@@ -13,6 +13,7 @@ class ViewConfig {
     final float textSize;
     final float strokeWidth;
     final boolean isMiles;
+    final boolean outline;
 
     ViewConfig(Context context, AttributeSet attrs) {
 //        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
@@ -26,6 +27,7 @@ class ViewConfig {
             textSize = a.getDimension(R.styleable.MapScaleView_scale_textSize, 12 * density);
             strokeWidth = a.getDimension(R.styleable.MapScaleView_scale_strokeWidth, 1.5f * density + 0.5f);
             isMiles = a.getBoolean(R.styleable.MapScaleView_scale_miles, false);
+            outline = a.getBoolean(R.styleable.MapScaleView_scale_outline, true);
         } finally {
             a.recycle();
         }

@@ -4,5 +4,6 @@
         <attr name="scale_strokeWidth" format="dimension"/>
         <attr name="scale_color" format="color"/>
         <attr name="scale_miles" format="boolean"/>
+        <attr name="scale_outline" format="boolean"/>
     </declare-styleable>
 </resources>
