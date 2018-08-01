@@ -43,6 +43,8 @@ public class MapScaleView extends View {
         if (viewConfig.isMiles) {
             scaleType = ScaleType.MILES_ONLY;
         }
+
+        drawer.setExpandLeftEnabled(viewConfig.isExpandLeft);
     }
 
     public void setColor(@ColorInt int color) {
@@ -121,6 +123,10 @@ public class MapScaleView extends View {
         updateScales();
 
         setMeasuredDimension(width, height);
+
+        if (drawer.isExpandLeftEnabled()) {
+            drawer.setExpandLeftStartX(mapScaleModel.getMaxWidth());
+        }
     }
 
     private int desiredWidth() {

@@ -5,5 +5,6 @@
         <attr name="scale_color" format="color"/>
         <attr name="scale_miles" format="boolean"/>
         <attr name="scale_outline" format="boolean"/>
+        <attr name="scale_barExpandLeft" format="boolean"/>
     </declare-styleable>
 </resources>
