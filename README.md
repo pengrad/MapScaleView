@@ -4,7 +4,7 @@
 
 Scale view for any Android Maps SDK (not only Google Maps)
 
-![Image](images/image.png)
+![Image](images/image_rtl.png)
 
 Include in layout file over map
 ```xml
