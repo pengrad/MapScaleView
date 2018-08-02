@@ -14,7 +14,7 @@ class ViewConfig {
     final float strokeWidth;
     final boolean isMiles;
     final boolean outline;
-    final boolean isExpandLeft;
+    final boolean expandRtl;
 
     ViewConfig(Context context, AttributeSet attrs) {
 //        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
@@ -29,7 +29,7 @@ class ViewConfig {
             strokeWidth = a.getDimension(R.styleable.MapScaleView_scale_strokeWidth, 1.5f * density);
             isMiles = a.getBoolean(R.styleable.MapScaleView_scale_miles, false);
             outline = a.getBoolean(R.styleable.MapScaleView_scale_outline, true);
-            isExpandLeft = a.getBoolean(R.styleable.MapScaleView_scale_barExpandLeft, false);
+            expandRtl = a.getBoolean(R.styleable.MapScaleView_scale_expandRtl, false);
         } finally {
             a.recycle();
         }

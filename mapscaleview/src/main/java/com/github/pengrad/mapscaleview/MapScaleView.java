@@ -44,7 +44,7 @@ public class MapScaleView extends View {
             scaleType = ScaleType.MILES_ONLY;
         }
 
-        drawer.setExpandLeftEnabled(viewConfig.isExpandLeft);
+        drawer.setExpandLeftEnabled(viewConfig.expandRtl);
     }
 
     public void setColor(@ColorInt int color) {
