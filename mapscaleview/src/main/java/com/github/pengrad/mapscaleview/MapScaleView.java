@@ -36,7 +36,7 @@ public class MapScaleView extends View {
         mapScaleModel = new MapScaleModel(density);
 
         ViewConfig viewConfig = new ViewConfig(context, attrs);
-        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline);
+        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline, viewConfig.expandRtl);
 
         desiredWidth = viewConfig.desiredWidth;
 
@@ -64,6 +64,11 @@ public class MapScaleView extends View {
 
     public void setOutlineEnabled(boolean enabled) {
         drawer.setOutlineEnabled(enabled);
+        invalidate();
+    }
+
+    public void setExpandRtlEnabled(boolean enabled) {
+        drawer.setExpandRtlEnabled(enabled);
         invalidate();
     }
 
@@ -118,6 +123,7 @@ public class MapScaleView extends View {
         int height = measureDimension(desiredHeight(), heightMeasureSpec);
 
         mapScaleModel.setMaxWidth(width);
+        drawer.setViewWidth(width);
         updateScales();
 
         setMeasuredDimension(width, height);

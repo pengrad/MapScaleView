@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap map;
     private MapScaleView scaleView;
     private MapScaleView scaleViewMiles;
+    private MapScaleView scaleViewRtl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         scaleView = (MapScaleView) findViewById(R.id.scaleView);
         scaleViewMiles = (MapScaleView) findViewById(R.id.scaleViewMiles);
+        scaleViewRtl = (MapScaleView) findViewById(R.id.scaleViewRtl);
     }
 
     @Override
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void update(CameraPosition cameraPosition) {
         scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
         scaleViewMiles.update(cameraPosition.zoom, cameraPosition.target.latitude);
+        scaleViewRtl.update(cameraPosition.zoom, cameraPosition.target.latitude);
     }
 
     public void changeColor(View view) {
@@ -108,5 +111,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void changeOutline(View view) {
         outline = !outline;
         scaleView.setOutlineEnabled(outline);
+    }
+
+    private boolean direction = false;
+
+    public void changeDirection(View view) {
+        direction = !direction;
+        scaleView.setExpandRtlEnabled(direction);
     }
 }

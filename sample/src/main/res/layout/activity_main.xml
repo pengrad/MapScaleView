@@ -60,6 +60,12 @@
             android:layout_height="wrap_content"
             android:onClick="changeOutline"
             android:text="outline"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeDirection"
+            android:text="direction"/>
     </LinearLayout>
 
     <com.github.pengrad.mapscaleview.MapScaleView
@@ -67,10 +73,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="120dp"
         android:layout_marginRight="4dp"
         app:scale_outline="true"
         app:scale_miles="true"/>
+
+    <com.github.pengrad.mapscaleview.MapScaleView
+        android:id="@+id/scaleViewRtl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="8dp"
+        app:scale_color="#dc5533"
+        app:scale_expandRtl="true"/>
 
     <com.github.pengrad.mapscaleview.MapScaleView
         android:id="@+id/scaleView"
