@@ -98,7 +98,7 @@ mapScaleView.milesOnly()
 # Download
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:mapscaleview:1.3.1'
+    compile 'com.github.pengrad:mapscaleview:1.4.0'
 }
 ```
 
