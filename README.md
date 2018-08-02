@@ -42,7 +42,8 @@ With miles or custom style
         app:scale_miles="true"
         app:scale_outline="true"
         app:scale_strokeWidth="3dp"
-        app:scale_textSize="20sp"/>
+        app:scale_textSize="20sp"
+        app:scale_expandRtl="true"/>
 ```
 
 Update on map changed
@@ -93,6 +94,9 @@ mapScaleView.setOutlineEnabled(boolean enabled)
 mapScaleView.metersAndMiles() // default
 mapScaleView.metersOnly()
 mapScaleView.milesOnly()
+
+// expand scale bar from right to left
+mapScaleView.setExpandRtlEnabled(true)
 ```
 
 # Download
