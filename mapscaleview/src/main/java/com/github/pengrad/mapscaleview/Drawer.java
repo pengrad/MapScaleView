@@ -21,10 +21,10 @@ public class Drawer {
     private float textHeight;
     private float horizontalLineY;
 
-    private boolean expandLeftEnabled;
+    private boolean expandRtlEnabled;
     private int viewWidth;
 
-    Drawer(int color, float textSize, float strokeWidth, float density, boolean outlineEnabled) {
+    Drawer(int color, float textSize, float strokeWidth, float density, boolean outlineEnabled, boolean expandRtlEnabled) {
         textPaint.setAntiAlias(true);
         textPaint.setColor(color);
         textPaint.setStyle(Paint.Style.FILL);
@@ -41,6 +41,7 @@ public class Drawer {
         outlineStrokeDiff = strokeWidth / 2;
         outlineTextStrokeWidth = density * 2;
         this.outlineEnabled = outlineEnabled;
+        this.expandRtlEnabled = expandRtlEnabled;
 
         update();
     }
@@ -86,8 +87,8 @@ public class Drawer {
         update();
     }
     
-    void setExpandLeftEnabled(boolean enabled) {
-        expandLeftEnabled = enabled;
+    void setExpandRtlEnabled(boolean enabled) {
+        expandRtlEnabled = enabled;
     }
 
     void setViewWidth(int width) {
@@ -98,13 +99,13 @@ public class Drawer {
         if (scales == null || scales.top() == null) {
             return;
         }
-        if (expandLeftEnabled && viewWidth == 0) {
-            expandLeftEnabled = false;
+        if (expandRtlEnabled && viewWidth == 0) {
+            expandRtlEnabled = false;
         }
 
         Scale top = scales.top();
 
-        if (expandLeftEnabled) {
+        if (expandRtlEnabled) {
             outlinePaint.setTextAlign(Paint.Align.RIGHT);
             textPaint.setTextAlign(Paint.Align.RIGHT);
         } else {
@@ -114,48 +115,48 @@ public class Drawer {
 
         if (outlineEnabled) {
             outlinePaint.setStrokeWidth(outlineTextStrokeWidth);
-            canvas.drawText(top.text(), expandLeftEnabled ? viewWidth : 0, textHeight, outlinePaint);
+            canvas.drawText(top.text(), expandRtlEnabled ? viewWidth : 0, textHeight, outlinePaint);
         }
-        canvas.drawText(top.text(), expandLeftEnabled ? viewWidth : 0, textHeight, textPaint);
+        canvas.drawText(top.text(), expandRtlEnabled ? viewWidth : 0, textHeight, textPaint);
 
         strokePath.rewind();
-        strokePath.moveTo(expandLeftEnabled ? (viewWidth - outlineStrokeDiff) : outlineStrokeDiff, horizontalLineY);
-        strokePath.lineTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), horizontalLineY);
+        strokePath.moveTo(expandRtlEnabled ? (viewWidth - outlineStrokeDiff) : outlineStrokeDiff, horizontalLineY);
+        strokePath.lineTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), horizontalLineY);
         if (outlineEnabled) {
-            strokePath.lineTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), textHeight + outlineStrokeDiff);
+            strokePath.lineTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), textHeight + outlineStrokeDiff);
         } else {
-            strokePath.lineTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), textHeight);
+            strokePath.lineTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), textHeight);
         }
 
         Scale bottom = scales.bottom();
         if (bottom != null) {
 
             if (bottom.length() > top.length()) {
-                strokePath.moveTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), horizontalLineY);
-                strokePath.lineTo(expandLeftEnabled ? (viewWidth - bottom.length()) : bottom.length(), horizontalLineY);
+                strokePath.moveTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), horizontalLineY);
+                strokePath.lineTo(expandRtlEnabled ? (viewWidth - bottom.length()) : bottom.length(), horizontalLineY);
             } else {
-                strokePath.moveTo(expandLeftEnabled ? (viewWidth - bottom.length()) : bottom.length(), horizontalLineY);
+                strokePath.moveTo(expandRtlEnabled ? (viewWidth - bottom.length()) : bottom.length(), horizontalLineY);
             }
 
-            strokePath.lineTo(expandLeftEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2);
+            strokePath.lineTo(expandRtlEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2);
 
             float bottomTextY = horizontalLineY + textHeight + textHeight / 2;
             if (outlineEnabled) {
-                canvas.drawText(bottom.text(), expandLeftEnabled ? viewWidth : 0, bottomTextY, outlinePaint);
+                canvas.drawText(bottom.text(), expandRtlEnabled ? viewWidth : 0, bottomTextY, outlinePaint);
             }
-            canvas.drawText(bottom.text(), expandLeftEnabled ? viewWidth : 0, bottomTextY, textPaint);
+            canvas.drawText(bottom.text(), expandRtlEnabled ? viewWidth : 0, bottomTextY, textPaint);
         }
 
         if (outlineEnabled) {
             outlinePaint.setStrokeWidth(outlineStrokeWidth);
             outlineDiffPath.rewind();
-            outlineDiffPath.moveTo(expandLeftEnabled ? viewWidth : 0, horizontalLineY);
-            outlineDiffPath.lineTo(expandLeftEnabled ? (viewWidth - outlineStrokeDiff) : outlineStrokeDiff, horizontalLineY);
-            outlineDiffPath.moveTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), textHeight + outlineStrokeDiff);
-            outlineDiffPath.lineTo(expandLeftEnabled ? (viewWidth - top.length()) : top.length(), textHeight);
+            outlineDiffPath.moveTo(expandRtlEnabled ? viewWidth : 0, horizontalLineY);
+            outlineDiffPath.lineTo(expandRtlEnabled ? (viewWidth - outlineStrokeDiff) : outlineStrokeDiff, horizontalLineY);
+            outlineDiffPath.moveTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), textHeight + outlineStrokeDiff);
+            outlineDiffPath.lineTo(expandRtlEnabled ? (viewWidth - top.length()) : top.length(), textHeight);
             if (bottom != null) {
-                outlineDiffPath.moveTo(expandLeftEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2);
-                outlineDiffPath.lineTo(expandLeftEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2 + outlineStrokeDiff);
+                outlineDiffPath.moveTo(expandRtlEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2);
+                outlineDiffPath.lineTo(expandRtlEnabled ? (viewWidth - bottom.length()) : bottom.length(), textHeight * 2 + outlineStrokeDiff);
             }
 
             canvas.drawPath(outlineDiffPath, outlinePaint);

@@ -36,15 +36,13 @@ public class MapScaleView extends View {
         mapScaleModel = new MapScaleModel(density);
 
         ViewConfig viewConfig = new ViewConfig(context, attrs);
-        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline);
+        drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline, viewConfig.expandRtl);
 
         desiredWidth = viewConfig.desiredWidth;
 
         if (viewConfig.isMiles) {
             scaleType = ScaleType.MILES_ONLY;
         }
-
-        drawer.setExpandLeftEnabled(viewConfig.expandRtl);
     }
 
     public void setColor(@ColorInt int color) {
@@ -66,6 +64,11 @@ public class MapScaleView extends View {
 
     public void setOutlineEnabled(boolean enabled) {
         drawer.setOutlineEnabled(enabled);
+        invalidate();
+    }
+
+    public void setExpandRtlEnabled(boolean enabled) {
+        drawer.setExpandRtlEnabled(enabled);
         invalidate();
     }
 
