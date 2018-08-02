@@ -120,13 +120,10 @@ public class MapScaleView extends View {
         int height = measureDimension(desiredHeight(), heightMeasureSpec);
 
         mapScaleModel.setMaxWidth(width);
+        drawer.setViewWidth(width);
         updateScales();
 
         setMeasuredDimension(width, height);
-
-        if (drawer.isExpandLeftEnabled()) {
-            drawer.setExpandLeftStartX(mapScaleModel.getMaxWidth());
-        }
     }
 
     private int desiredWidth() {

@@ -28,10 +28,6 @@ class MapScaleModel {
         maxWidth = width;
     }
 
-    int getMaxWidth() {
-        return maxWidth;
-    }
-
     void setPosition(float zoom, double latitude) {
         lastZoom = zoom;
         lastLatitude = latitude;
