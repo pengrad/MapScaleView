@@ -51,11 +51,9 @@ public class Drawer {
         outlinePaint.setStrokeWidth(outlineTextStrokeWidth);
 
         Rect textRect = new Rect();
-        if (outlineEnabled) {
-            outlinePaint.getTextBounds("A", 0, 1, textRect);
-        } else {
-            textPaint.getTextBounds("A", 0, 1, textRect);
-        }
+        Paint highestPaint = outlineEnabled ? outlinePaint : textPaint;
+        String possibleText = "1234567890kmift";
+        highestPaint.getTextBounds(possibleText, 0, possibleText.length(), textRect);
         textHeight = textRect.height();
 
         horizontalLineY = textHeight + textHeight / 2;
@@ -86,7 +84,7 @@ public class Drawer {
         outlineEnabled = enabled;
         update();
     }
-    
+
     void setExpandRtlEnabled(boolean enabled) {
         expandRtlEnabled = enabled;
     }
