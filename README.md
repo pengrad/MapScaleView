@@ -102,7 +102,7 @@ mapScaleView.setExpandRtlEnabled(true)
 # Download
 ```groovy
 dependencies {
-    compile 'com.github.pengrad:mapscaleview:1.4.1'
+    implementation 'com.github.pengrad:mapscaleview:1.4.2'
 }
 ```
 
