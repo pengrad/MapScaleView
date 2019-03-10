@@ -35,6 +35,8 @@ task javadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath()
             .join(File.pathSeparator))
+    configurations.compileOnly.setCanBeResolved(true)
+    classpath += configurations.compileOnly
 }
 
 task javadocsJar(type: Jar) {
