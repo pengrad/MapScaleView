@@ -10,20 +10,56 @@ classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.github.pengrad'
-version = '1.4.2'
+group = GROUP
+version = VERSION_NAME
 
 bintray {
     user = project.hasProperty('BINTRAY_USER') ? BINTRAY_USER : ""
     key = project.hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : ""
     pkg {
-        repo = 'maven'
-        name = 'mapscaleview'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/pengrad/MapScaleView.git'
-        websiteUrl = 'https://github.com/pengrad/MapScaleView'
+        repo = BINTRAY_REPO
+        name = POM_ARTIFACT_ID
+        licenses = [BINTRAY_LICENSE]
+        vcsUrl = POM_SCM_URL
+        websiteUrl = POM_URL
     }
     configurations = ['archives']
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.groupId = GROUP
+        pom.artifactId = POM_ARTIFACT_ID
+        pom.version = VERSION_NAME
+
+        pom.project {
+            name POM_NAME
+            packaging POM_PACKAGING
+            description POM_DESCRIPTION
+            url POM_URL
+
+            scm {
+                url POM_SCM_URL
+                connection POM_SCM_CONNECTION
+                developerConnection POM_SCM_DEV_CONNECTION
+            }
+
+            licenses {
+                license {
+                    name POM_LICENCE_NAME
+                    url POM_LICENCE_URL
+                    distribution POM_LICENCE_DIST
+                }
+            }
+
+            developers {
+                developer {
+                    id POM_DEVELOPER_ID
+                    name POM_DEVELOPER_NAME
+                }
+            }
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -39,12 +75,10 @@ task javadocs(type: Javadoc) {
     classpath += configurations.compileOnly
 }
 
-task javadocsJar(type: Jar) {
+task javadocsJar(type: Jar, dependsOn: javadocs) {
     from javadocs.destinationDir
     classifier 'javadoc'
 }
-
-javadocsJar.dependsOn javadocs
 
 artifacts {
     archives javadocsJar
