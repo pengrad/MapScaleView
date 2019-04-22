@@ -6,6 +6,17 @@ Scale view for any Android Maps SDK (not only Google Maps)
 
 ![Image](images/image_rtl.png)
 
+## Contributing
+I encourage you to participate in this project. Feel free to open issues with bugs or ideas, fork and send pull requests.  
+Check [list of "help wanted" issues](https://github.com/pengrad/MapScaleView/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) to start with.
+
+## Usage
+```groovy
+dependencies {
+    implementation 'com.github.pengrad:mapscaleview:1.4.2'
+}
+```
+
 Include in layout file over map
 ```xml
 <FrameLayout
@@ -82,7 +93,7 @@ public void onCameraChange(CameraPosition cameraPosition) {
 }
 ```
 
-# Customization
+## Customization
 ```java
 mapScaleView.setColor(@ColorInt int color)
 mapScaleView.setTextSize(float textSize)
@@ -98,11 +109,3 @@ mapScaleView.milesOnly()
 // expand scale bar from right to left
 mapScaleView.setExpandRtlEnabled(true)
 ```
-
-# Download
-```groovy
-dependencies {
-    implementation 'com.github.pengrad:mapscaleview:1.4.2'
-}
-```
-
