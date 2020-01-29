@@ -2,7 +2,6 @@ package com.github.pengrad.mapscaleview.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Random;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraChangeListener {
 
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
-        scaleView = (MapScaleView) findViewById(R.id.scaleView);
-        scaleViewMiles = (MapScaleView) findViewById(R.id.scaleViewMiles);
-        scaleViewRtl = (MapScaleView) findViewById(R.id.scaleViewRtl);
+        scaleView = findViewById(R.id.scaleView);
+        scaleViewMiles = findViewById(R.id.scaleViewMiles);
+        scaleViewRtl = findViewById(R.id.scaleViewRtl);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void changeMiles(View view) {
         isMiles = !isMiles;
-        scaleView.setIsMiles(isMiles);
+        scaleView.milesOnly();
     }
 
     private boolean isMeters = false;
