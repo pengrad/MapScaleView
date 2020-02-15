@@ -68,6 +68,14 @@
             android:text="direction" />
     </LinearLayout>
 
+    <com.github.pengrad.mapscaleview.MapScaleView
+        android:id="@+id/scaleViewBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="8dp"
+        android:background="#3333" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
