@@ -24,6 +24,8 @@ public class Drawer {
     private boolean expandRtlEnabled;
     private int viewWidth;
 
+    private Scales scales = new Scales(null, null);
+
     Drawer(int color, float textSize, float strokeWidth, float density, boolean outlineEnabled, boolean expandRtlEnabled) {
         textPaint.setAntiAlias(true);
         textPaint.setColor(color);
@@ -46,7 +48,7 @@ public class Drawer {
         update();
     }
 
-    void update() {
+    private void update() {
         outlinePaint.setTextSize(textPaint.getTextSize());
         outlinePaint.setStrokeWidth(outlineTextStrokeWidth);
 
@@ -59,8 +61,16 @@ public class Drawer {
         horizontalLineY = textHeight + textHeight / 2;
     }
 
+    int getWidth() {
+        return (int) (scales.maxLength() + strokePaint.getStrokeWidth());
+    }
+
     int getHeight() {
         return (int) (textPaint.getTextSize() * 3 + textPaint.getStrokeWidth());
+    }
+
+    void setScales(Scales scales) {
+        this.scales = scales;
     }
 
     void setColor(int color) {
@@ -93,15 +103,14 @@ public class Drawer {
         viewWidth = width;
     }
 
-    void draw(Canvas canvas, Scales scales) {
-        if (scales == null || scales.top() == null) {
+    void draw(Canvas canvas) {
+        Scale top = scales.top();
+        if (top == null) {
             return;
         }
         if (expandRtlEnabled && viewWidth == 0) {
             expandRtlEnabled = false;
         }
-
-        Scale top = scales.top();
 
         if (expandRtlEnabled) {
             outlinePaint.setTextAlign(Paint.Align.RIGHT);

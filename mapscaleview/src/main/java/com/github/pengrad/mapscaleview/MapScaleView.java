@@ -12,9 +12,7 @@ public class MapScaleView extends View {
     private final MapScaleModel mapScaleModel;
     private final Drawer drawer;
 
-    private final int desiredWidth;
-
-    private Scales scales;
+    private final int maxWidth;
 
     private ScaleType scaleType = ScaleType.BOTH;
 
@@ -39,7 +37,7 @@ public class MapScaleView extends View {
         ViewConfig viewConfig = new ViewConfig(context, attrs);
         drawer = new Drawer(viewConfig.color, viewConfig.textSize, viewConfig.strokeWidth, density, viewConfig.outline, viewConfig.expandRtl);
 
-        desiredWidth = viewConfig.desiredWidth;
+        maxWidth = viewConfig.maxWidth;
 
         if (viewConfig.isMiles) {
             scaleType = ScaleType.MILES_ONLY;
@@ -114,8 +112,9 @@ public class MapScaleView extends View {
             }
         }
 
-        scales = new Scales(top, bottom);
+        drawer.setScales(new Scales(top, bottom));
         invalidate();
+        requestLayout();
     }
 
     @Override
@@ -123,15 +122,20 @@ public class MapScaleView extends View {
         int width = measureDimension(desiredWidth(), widthMeasureSpec);
         int height = measureDimension(desiredHeight(), heightMeasureSpec);
 
-        mapScaleModel.setMaxWidth(width);
-        drawer.setViewWidth(width);
-        updateScales();
+        if (mapScaleModel.updateMaxWidth(width)) {
+            updateScales();
+        }
 
+        if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.EXACTLY) {
+            width = drawer.getWidth();
+        }
+
+        drawer.setViewWidth(width);
         setMeasuredDimension(width, height);
     }
 
     private int desiredWidth() {
-        return desiredWidth;
+        return maxWidth;
     }
 
     private int desiredHeight() {
@@ -153,6 +157,6 @@ public class MapScaleView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        drawer.draw(canvas, scales);
+        drawer.draw(canvas);
     }
 }
