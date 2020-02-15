@@ -1,5 +1,7 @@
 package com.github.pengrad.mapscaleview;
 
+import androidx.annotation.Nullable;
+
 class Scales {
     private final Scale top, bottom;
 
@@ -8,11 +10,17 @@ class Scales {
         this.bottom = bottom;
     }
 
-    public Scale top() {
+    @Nullable
+    Scale top() {
         return top;
     }
 
-    public Scale bottom() {
+    @Nullable
+    Scale bottom() {
         return bottom;
+    }
+
+    float maxLength() {
+        return Math.max(top != null ? top.length() : 0, bottom != null ? bottom.length() : 0);
     }
 }

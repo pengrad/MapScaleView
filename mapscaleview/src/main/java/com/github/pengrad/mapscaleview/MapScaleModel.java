@@ -24,8 +24,12 @@ class MapScaleModel {
         this.density = density;
     }
 
-    void setMaxWidth(int width) {
-        maxWidth = width;
+    // returns true if width changed
+    boolean updateMaxWidth(int width) {
+        if (maxWidth != width) {
+            maxWidth = width;
+            return true;
+        } else return false;
     }
 
     void setPosition(float zoom, double latitude) {
