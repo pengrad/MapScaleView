@@ -49,6 +49,7 @@ With miles or custom style
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="4dp"
+        app:scale_maxWidth="100dp"
         app:scale_color="#009"
         app:scale_miles="true"
         app:scale_outline="true"
@@ -58,38 +59,29 @@ With miles or custom style
 ```
 
 Update on map changed
-```java
-MapScaleView scaleView = (MapScaleView) findViewById(R.id.scaleView);
-CameraPosition cameraPosition = map.getCameraPosition();
+```kotlin
+val scaleView: MapScaleView = findViewById(R.id.scaleView)
+val cameraPosition = map.cameraPosition
 // need to pass zoom and latitude
-scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
+scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude)
 ```
 
 Full example with subscribing to map events and updating scale view
-```java
-@Override
-public void onMapReady(GoogleMap googleMap) {
-    map = googleMap;
-    googleMap.setOnCameraMoveListener(this);
-    googleMap.setOnCameraIdleListener(this);
-    googleMap.setOnCameraChangeListener(this);
+```kotlin
+override fun onMapReady(googleMap: GoogleMap) {
+    map = googleMap
+    googleMap.setOnCameraMoveListener(this)
+    googleMap.setOnCameraIdleListener(this)
 }
 
-@Override
-public void onCameraMove() {
-    CameraPosition cameraPosition = map.getCameraPosition();
-    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
+override fun onCameraMove() {
+    val cameraPosition = map.cameraPosition
+    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude)
 }
 
-@Override
-public void onCameraIdle() {
-    CameraPosition cameraPosition = map.getCameraPosition();
-    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
-}
-
-@Override
-public void onCameraChange(CameraPosition cameraPosition) {
-    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude);
+override fun onCameraIdle() {
+    val cameraPosition = map.cameraPosition
+    scaleView.update(cameraPosition.zoom, cameraPosition.target.latitude)
 }
 ```
 
@@ -99,13 +91,13 @@ mapScaleView.setColor(@ColorInt int color)
 mapScaleView.setTextSize(float textSize)
 mapScaleView.setStrokeWidth(float strokeWidth)
 
-// enable/disable white outline
-mapScaleView.setOutlineEnabled(boolean enabled)
+// enable/disable white outline, enabled by default
+mapScaleView.setOutlineEnabled(false)
 
 mapScaleView.metersAndMiles() // default
 mapScaleView.metersOnly()
 mapScaleView.milesOnly()
 
-// expand scale bar from right to left
+// expand scale bar from right to left, disabled by default
 mapScaleView.setExpandRtlEnabled(true)
 ```
