@@ -66,7 +66,11 @@ public class Drawer {
     }
 
     int getHeight() {
-        return (int) (textPaint.getTextSize() * 3 + textPaint.getStrokeWidth());
+        if (scales.bottom() != null) {
+            return (int) (textHeight * 3 + outlineTextStrokeWidth / 2);
+        } else {
+            return (int) (horizontalLineY + strokePaint.getStrokeWidth());
+        }
     }
 
     void setScales(Scales scales) {
