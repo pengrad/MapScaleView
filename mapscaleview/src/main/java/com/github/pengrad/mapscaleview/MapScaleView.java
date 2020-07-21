@@ -2,6 +2,7 @@ package com.github.pengrad.mapscaleview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -51,6 +52,12 @@ public class MapScaleView extends View {
 
     public void setTextSize(float textSize) {
         drawer.setTextSize(textSize);
+        invalidate();
+        requestLayout();
+    }
+
+    public void setTextFont(Typeface font) {
+        drawer.setTextFont(font);
         invalidate();
         requestLayout();
     }

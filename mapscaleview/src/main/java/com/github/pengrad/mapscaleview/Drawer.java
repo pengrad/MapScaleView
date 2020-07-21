@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 
 public class Drawer {
 
@@ -50,6 +51,7 @@ public class Drawer {
 
     private void update() {
         outlinePaint.setTextSize(textPaint.getTextSize());
+        outlinePaint.setTypeface(textPaint.getTypeface());
         outlinePaint.setStrokeWidth(outlineTextStrokeWidth);
 
         Rect textRect = new Rect();
@@ -84,6 +86,11 @@ public class Drawer {
 
     void setTextSize(float textSize) {
         textPaint.setTextSize(textSize);
+        update();
+    }
+
+    void setTextFont(Typeface font) {
+        textPaint.setTypeface(font);
         update();
     }
 

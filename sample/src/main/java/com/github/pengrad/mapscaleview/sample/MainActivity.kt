@@ -1,9 +1,11 @@
 package com.github.pengrad.mapscaleview.sample
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.github.pengrad.mapscaleview.MapScaleView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -85,6 +87,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, OnCameraMoveListen
     fun changeSize(view: View) {
         scaleView.layoutParams.width = nextInt(200) + 200
         scaleView.requestLayout()
+    }
+
+    private var isDefaultFont = true
+    fun changeFont(view: View) {
+        isDefaultFont = if (isDefaultFont){
+            scales.forEach { it.setTextFont(Typeface.DEFAULT) }
+            false
+        } else {
+            scales.forEach { it.setTextFont(Typeface.DEFAULT_BOLD) }
+            true
+        }
     }
 
     private var outline = true
