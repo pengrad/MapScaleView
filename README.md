@@ -90,6 +90,7 @@ override fun onCameraIdle() {
 mapScaleView.setColor(@ColorInt int color)
 mapScaleView.setTextSize(float textSize)
 mapScaleView.setStrokeWidth(float strokeWidth)
+mapScaleView.setTextFont(Typeface font)
 
 // enable/disable white outline, enabled by default
 mapScaleView.setOutlineEnabled(false)
