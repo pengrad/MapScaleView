@@ -14,8 +14,8 @@ group = GROUP
 version = VERSION_NAME
 
 bintray {
-    user = project.hasProperty('BINTRAY_USER') ? BINTRAY_USER : ""
-    key = project.hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : ""
+    user = project.hasProperty('BINTRAY_USER') ? BINTRAY_USER : System.getenv("bintrayUser")
+    key = project.hasProperty('BINTRAY_KEY') ? BINTRAY_KEY : System.getenv("bintrayApiKey")
     pkg {
         repo = BINTRAY_REPO
         name = POM_ARTIFACT_ID
