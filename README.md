@@ -13,7 +13,7 @@ Check [list of "help wanted" issues](https://github.com/pengrad/MapScaleView/iss
 ## Usage
 ```groovy
 dependencies {
-    implementation 'com.github.pengrad:mapscaleview:1.5.0'
+    implementation 'com.github.pengrad:mapscaleview:1.6.0'
 }
 ```
 
