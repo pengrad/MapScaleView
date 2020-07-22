@@ -1,0 +1,17 @@
+name: Publish Bintray
+on:
+  release:
+    types: [published]
+    
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Bintray Upload
+      env:
+        bintrayUser: ${{ secrets.BINTRAY_USER }}
+        bintrayApiKey: ${{ secrets.BINTRAY_API_KEY }}
+      run: ./gradlew bintrayUpload
