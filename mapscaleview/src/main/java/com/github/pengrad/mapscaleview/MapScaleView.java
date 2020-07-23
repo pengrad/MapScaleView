@@ -45,6 +45,11 @@ public class MapScaleView extends View {
         }
     }
 
+    public void setTileSize(int tileSize) {
+        mapScaleModel.setTileSize(tileSize);
+        updateScales();
+    }
+
     public void setColor(@ColorInt int color) {
         drawer.setColor(color);
         invalidate();

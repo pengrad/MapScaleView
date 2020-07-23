@@ -2,8 +2,8 @@ package com.github.pengrad.mapscaleview;
 
 class MapScaleModel {
 
-    private static final double TILE_SIZE_METERS_AT_0_ZOOM = 156543.03;
-    private static final double TILE_SIZE_FT_AT_0_ZOOM = 513592.62;
+    private static final double EQUATOR_LENGTH_METERS = 40075016.686;
+    private static final double EQUATOR_LENGTH_FEET = 131479713.537;
 
     private static final int FT_IN_MILE = 5280;
 
@@ -20,6 +20,9 @@ class MapScaleModel {
     private float lastZoom = -1;
     private double lastLatitude = -100;
 
+    private double tileSizeMetersAt0Zoom = EQUATOR_LENGTH_METERS / 256;
+    private double tileSizeFeetAt0Zoom = EQUATOR_LENGTH_FEET / 256;
+
     MapScaleModel(float density) {
         this.density = density;
     }
@@ -30,6 +33,11 @@ class MapScaleModel {
             maxWidth = width;
             return true;
         } else return false;
+    }
+
+    void setTileSize(int tileSize) {
+        tileSizeMetersAt0Zoom = EQUATOR_LENGTH_METERS / tileSize;
+        tileSizeFeetAt0Zoom = EQUATOR_LENGTH_FEET / tileSize;
     }
 
     void setPosition(float zoom, double latitude) {
@@ -45,7 +53,7 @@ class MapScaleModel {
         double latitude = lastLatitude;
         if (zoom < 0 || Math.abs(latitude) > 90) return null;
 
-        double tileSizeAtZoom0 = meters ? TILE_SIZE_METERS_AT_0_ZOOM : TILE_SIZE_FT_AT_0_ZOOM;
+        double tileSizeAtZoom0 = meters ? tileSizeMetersAt0Zoom : tileSizeFeetAt0Zoom;
         float[] distances = meters ? METERS : FT;
 
         final double resolution = tileSizeAtZoom0 / density * Math.cos(latitude * Math.PI / 180) / Math.pow(2, zoom);
