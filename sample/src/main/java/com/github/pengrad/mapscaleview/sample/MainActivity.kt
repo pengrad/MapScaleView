@@ -111,4 +111,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, OnCameraMoveListen
         direction = !direction
         scales.forEach { it.setExpandRtlEnabled(direction) }
     }
+
+    var largeTiles: Boolean = false
+    fun changeTileSize(view: View) {
+        largeTiles = !largeTiles
+        scales.forEach { it.setTileSize(if (largeTiles) 512 else 256) }
+    }
 }
