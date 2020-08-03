@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MapScaleView</string>
+    <string name="googlemaps">GoogleMaps</string>
+    <string name="mapbox">Mapbox</string>
 </resources>
