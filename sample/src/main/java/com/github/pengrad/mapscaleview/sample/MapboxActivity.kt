@@ -26,21 +26,10 @@ import kotlin.random.Random
 
 
 private const val TAG = "MapboxActivity"
-class MapboxActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapboxActivity : GenericActivity(), OnMapReadyCallback {
 
     private lateinit var mapboxMap: MapboxMap
     private lateinit var mapView: MapView
-    private val scales by lazy {
-        listOf<MapScaleView>(
-                findViewById(R.id.scaleView),
-                findViewById(R.id.scaleViewMiles),
-                findViewById(R.id.scaleViewRtl),
-                findViewById(R.id.scaleViewBg),
-                findViewById(R.id.scaleViewBgFixed)
-        )
-    }
-    private val scaleView get() = scales[0]
-    private val density by lazy { resources.displayMetrics.density }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,69 +99,5 @@ class MapboxActivity : AppCompatActivity(), OnMapReadyCallback {
         mapboxMap.addOnCameraIdleListener{ update(mapboxMap.cameraPosition)}
         mapboxMap.setStyle(Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41"))
         mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.07770360532252, -94.76820822805165),12.0))
-    }
-
-    private fun update(cameraPosition: CameraPosition) {
-        for (scale in scales) {
-            scale.update(cameraPosition.zoom.toFloat(), cameraPosition.target.latitude)
-        }
-    }
-
-    fun changeColor(view: View) {
-        val getColor = { Color.rgb(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255)) }
-        scales.forEach { it.setColor(getColor()) }
-    }
-
-    fun changeTextSize(view: View) {
-        scales.forEach { it.setTextSize((Random.nextInt(10) + 12) * density) }
-    }
-
-    fun changeStrokeWidth(view: View) {
-        scales.forEach { it.setStrokeWidth((Random.nextInt(3) + 0.5f) * density) }
-    }
-
-    fun changeMiles(view: View) {
-        scaleView.milesOnly()
-    }
-
-    private var isMeters = false
-    fun changeMeters(view: View) {
-        isMeters = !isMeters
-        if (isMeters) scales.forEach { it.metersOnly() }
-        else scales.forEach { it.metersAndMiles() }
-    }
-
-    fun changeSize(view: View) {
-        scaleView.layoutParams.width = Random.nextInt(200) + 200
-        scaleView.requestLayout()
-    }
-
-    private var isDefaultFont = true
-    fun changeFont(view: View) {
-        isDefaultFont = if (isDefaultFont){
-            scales.forEach { it.setTextFont(Typeface.DEFAULT) }
-            false
-        } else {
-            scales.forEach { it.setTextFont(Typeface.DEFAULT_BOLD) }
-            true
-        }
-    }
-
-    private var outline = true
-    fun changeOutline(view: View) {
-        outline = !outline
-        scales.forEach { it.setOutlineEnabled(outline) }
-    }
-
-    private var direction = false
-    fun changeDirection(view: View) {
-        direction = !direction
-        scales.forEach { it.setExpandRtlEnabled(direction) }
-    }
-
-    var largeTiles: Boolean = false
-    fun changeTileSize(view: View) {
-        largeTiles = !largeTiles
-        scales.forEach { it.setTileSize(if (largeTiles) 512 else 256) }
     }
 }
