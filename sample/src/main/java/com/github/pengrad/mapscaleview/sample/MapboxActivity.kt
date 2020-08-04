@@ -1,18 +1,20 @@
 package com.github.pengrad.mapscaleview.sample
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
+import com.github.pengrad.mapscaleview.MapScaleView
 import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
 import java.security.spec.KeySpec
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -20,6 +22,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
+import kotlin.random.Random
 
 
 private const val TAG = "MapboxActivity"
@@ -27,6 +30,17 @@ class MapboxActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mapboxMap: MapboxMap
     private lateinit var mapView: MapView
+    private val scales by lazy {
+        listOf<MapScaleView>(
+                findViewById(R.id.scaleView),
+                findViewById(R.id.scaleViewMiles),
+                findViewById(R.id.scaleViewRtl),
+                findViewById(R.id.scaleViewBg),
+                findViewById(R.id.scaleViewBgFixed)
+        )
+    }
+    private val scaleView get() = scales[0]
+    private val density by lazy { resources.displayMetrics.density }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +54,9 @@ class MapboxActivity : AppCompatActivity(), OnMapReadyCallback {
         mapView = findViewById(R.id.map_view)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-        // default style (mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41)
+        // TODO set style
+        // default style ()
+        // TODO add scaleView
     }
 
     /**
@@ -90,7 +106,73 @@ class MapboxActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
-        mapboxMap.addOnCameraMoveListener{ updateScaleBar(mapboxMap) }
-        mapboxMap.addOnCameraIdleListener{ updateScaleBar(mapboxMap)}
+        mapboxMap.addOnCameraMoveListener{ update(mapboxMap.cameraPosition) }
+        mapboxMap.addOnCameraIdleListener{ update(mapboxMap.cameraPosition)}
+        mapboxMap.setStyle(Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41"))
+        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.07770360532252, -94.76820822805165),12.0))
+    }
+
+    private fun update(cameraPosition: CameraPosition) {
+        for (scale in scales) {
+            scale.update(cameraPosition.zoom.toFloat(), cameraPosition.target.latitude)
+        }
+    }
+
+    fun changeColor(view: View) {
+        val getColor = { Color.rgb(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255)) }
+        scales.forEach { it.setColor(getColor()) }
+    }
+
+    fun changeTextSize(view: View) {
+        scales.forEach { it.setTextSize((Random.nextInt(10) + 12) * density) }
+    }
+
+    fun changeStrokeWidth(view: View) {
+        scales.forEach { it.setStrokeWidth((Random.nextInt(3) + 0.5f) * density) }
+    }
+
+    fun changeMiles(view: View) {
+        scaleView.milesOnly()
+    }
+
+    private var isMeters = false
+    fun changeMeters(view: View) {
+        isMeters = !isMeters
+        if (isMeters) scales.forEach { it.metersOnly() }
+        else scales.forEach { it.metersAndMiles() }
+    }
+
+    fun changeSize(view: View) {
+        scaleView.layoutParams.width = Random.nextInt(200) + 200
+        scaleView.requestLayout()
+    }
+
+    private var isDefaultFont = true
+    fun changeFont(view: View) {
+        isDefaultFont = if (isDefaultFont){
+            scales.forEach { it.setTextFont(Typeface.DEFAULT) }
+            false
+        } else {
+            scales.forEach { it.setTextFont(Typeface.DEFAULT_BOLD) }
+            true
+        }
+    }
+
+    private var outline = true
+    fun changeOutline(view: View) {
+        outline = !outline
+        scales.forEach { it.setOutlineEnabled(outline) }
+    }
+
+    private var direction = false
+    fun changeDirection(view: View) {
+        direction = !direction
+        scales.forEach { it.setExpandRtlEnabled(direction) }
+    }
+
+    var largeTiles: Boolean = false
+    fun changeTileSize(view: View) {
+        largeTiles = !largeTiles
+        scales.forEach { it.setTileSize(if (largeTiles) 512 else 256) }
     }
 }
