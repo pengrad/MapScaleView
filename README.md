@@ -85,6 +85,8 @@ override fun onCameraIdle() {
 }
 ```
 
+Refer to the sample project on how to use scale view with other Android Maps SDK (Mapbox).
+
 ## Customization
 ```java
 mapScaleView.setColor(@ColorInt int color)

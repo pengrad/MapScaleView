@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MapScaleView</string>
+    <string name="googlemaps">GoogleMaps</string>
+    <string name="mapbox">Mapbox</string>
+    <string name="mapbox_token_encrypted">lOhWVfoWdC547MPQH/5rpxJcLBIi2qJqcyLv4uuJI52aJ8mJZ25D6sFavoO6M4yOaUgAeQRsmWrLdBsz06KvIXiseE+CnSLELI7meamGAGndbsQb9ZC6GGe2w1lz3gXK</string>
 </resources>

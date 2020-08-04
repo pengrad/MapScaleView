@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_googlemaps">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="HardcodedText">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeColor"
+            android:text="color"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeTextSize"
+            android:text="text size"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeStrokeWidth"
+            android:text="stroke width"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeMiles"
+            android:text="miles"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeMeters"
+            android:text="meters"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeSize"
+            android:text="size"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeOutline"
+            android:text="outline"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeDirection"
+            android:text="direction"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeFont"
+            android:text="font"
+            tools:ignore="OnClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeTileSize"
+            android:text="tile size"
+            tools:ignore="OnClick" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end">
+
+        <com.github.pengrad.mapscaleview.MapScaleView
+            android:id="@+id/scaleViewBgFixed"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#3333" />
+
+
+        <com.github.pengrad.mapscaleview.MapScaleView
+            android:id="@+id/scaleViewBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#3333"
+            app:scale_expandRtl="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <com.github.pengrad.mapscaleview.MapScaleView
+            android:id="@+id/scaleViewMiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_miles="true"
+            app:scale_outline="true" />
+
+        <com.github.pengrad.mapscaleview.MapScaleView
+            android:id="@+id/scaleViewRtl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_color="#dc5533"
+            app:scale_expandRtl="true" />
+
+        <com.github.pengrad.mapscaleview.MapScaleView
+            android:id="@+id/scaleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_color="#339cdc"
+            app:scale_textSize="20sp" />
+
+    </LinearLayout>
+</merge>

@@ -17,11 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MapboxActivity" />
+        <activity android:name=".GoogleMapsActivity" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAUK12pFAvsn-NE2u1P9y3BdxvakDSNyYk" />
-
     </application>
 
 </manifest>
