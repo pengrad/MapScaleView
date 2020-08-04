@@ -1,14 +1,8 @@
 package com.github.pengrad.mapscaleview.sample
 
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Base64
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import com.github.pengrad.mapscaleview.MapScaleView
 import com.mapbox.mapboxsdk.Mapbox
-import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
@@ -22,10 +16,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
-import kotlin.random.Random
 
-
-private const val TAG = "MapboxActivity"
 class MapboxActivity : GenericActivity(), OnMapReadyCallback {
 
     private lateinit var mapboxMap: MapboxMap
@@ -95,9 +86,11 @@ class MapboxActivity : GenericActivity(), OnMapReadyCallback {
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
-        mapboxMap.addOnCameraMoveListener{ update(mapboxMap.cameraPosition) }
-        mapboxMap.addOnCameraIdleListener{ update(mapboxMap.cameraPosition)}
+        mapboxMap.addOnCameraMoveListener { update(mapboxMap.cameraPosition) }
+        mapboxMap.addOnCameraIdleListener { update(mapboxMap.cameraPosition) }
         mapboxMap.setStyle(Style.Builder().fromUri("mapbox://styles/mapbox/cjf4m44iw0uza2spb3q0a7s41"))
-        mapboxMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.07770360532252, -94.76820822805165),12.0))
+        mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.07770360532252, -94.76820822805165), 11.0))
+        // mapbox uses large tiles -> scaleView.setTileSize(512)
+        changeTileSize(mapView)
     }
 }

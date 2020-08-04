@@ -25,7 +25,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-rc1"
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
 }

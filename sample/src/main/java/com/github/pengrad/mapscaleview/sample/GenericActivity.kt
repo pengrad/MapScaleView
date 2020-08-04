@@ -8,14 +8,14 @@ import com.github.pengrad.mapscaleview.MapScaleView
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import kotlin.random.Random
 
-open class GenericActivity: AppCompatActivity() {
+open class GenericActivity : AppCompatActivity() {
     private val scales by lazy {
         listOf<MapScaleView>(
-                findViewById(R.id.scaleView),
-                findViewById(R.id.scaleViewMiles),
-                findViewById(R.id.scaleViewRtl),
-                findViewById(R.id.scaleViewBg),
-                findViewById(R.id.scaleViewBgFixed)
+            findViewById(R.id.scaleView),
+            findViewById(R.id.scaleViewMiles),
+            findViewById(R.id.scaleViewRtl),
+            findViewById(R.id.scaleViewBg),
+            findViewById(R.id.scaleViewBgFixed)
         )
     }
     private val scaleView get() = scales[0]
@@ -63,7 +63,7 @@ open class GenericActivity: AppCompatActivity() {
 
     private var isDefaultFont = true
     fun changeFont(view: View) {
-        isDefaultFont = if (isDefaultFont){
+        isDefaultFont = if (isDefaultFont) {
             scales.forEach { it.setTextFont(Typeface.DEFAULT) }
             false
         } else {
@@ -84,7 +84,7 @@ open class GenericActivity: AppCompatActivity() {
         scales.forEach { it.setExpandRtlEnabled(direction) }
     }
 
-    var largeTiles: Boolean = false
+    private var largeTiles: Boolean = false
     fun changeTileSize(view: View) {
         largeTiles = !largeTiles
         scales.forEach { it.setTileSize(if (largeTiles) 512 else 256) }
